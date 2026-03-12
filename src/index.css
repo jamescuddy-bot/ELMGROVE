@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Inclusive+Sans:ital,wght@0,300..700;1,300..700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-teal: #1B9AAA;
+  --color-red: #EF476F;
+  --color-dark-red: #B5173A;
+  --color-amber: #FFC43D;
+  --color-mint: #06D6A0;
+  --color-mint-tint: #F8FFE5;
+  --color-ink: #1a1a1a;
+  --font-sans: 'Inclusive Sans', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inclusive Sans', sans-serif;
+  background: #ffffff;
+  color: #1a1a1a;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100svh;
+}
