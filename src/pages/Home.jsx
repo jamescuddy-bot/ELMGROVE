@@ -29,7 +29,7 @@ export default function Home() {
   useEffect(() => {
     const timer = setInterval(() => {
       setIndex(i => (i + 1) % statements.length)
-    }, 3000)
+    }, 2000)
     return () => clearInterval(timer)
   }, [])
 
