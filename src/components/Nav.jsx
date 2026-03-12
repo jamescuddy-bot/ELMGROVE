@@ -17,7 +17,7 @@ export default function Nav() {
     <>
       <nav className="flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-white sticky top-0 z-50">
         <Link to="/" className="text-[15px] font-bold text-ink no-underline">
-          Elm Grove · Air quality
+          Elm Grove air quality
         </Link>
         <button
           onClick={() => setOpen(true)}
@@ -33,7 +33,7 @@ export default function Nav() {
       {open && (
         <div className="fixed inset-0 bg-white z-50 flex flex-col px-5 py-4">
           <div className="flex items-center justify-between mb-10">
-            <span className="text-[15px] font-bold text-ink">Elm Grove · Air quality</span>
+            <span className="text-[15px] font-bold text-ink">Elm Grove air quality</span>
             <button
               onClick={() => setOpen(false)}
               className="text-2xl text-gray-400 bg-transparent border-none cursor-pointer leading-none"
