@@ -32,7 +32,19 @@ export default function HistoricalData() {
   return (
     <Layout>
       <div className="px-5 pt-6 pb-8">
-        <h1 className="text-[26px] font-bold text-ink mb-5">Historical data</h1>
+        <h1 className="text-[26px] font-bold text-ink mb-2">Historical data</h1>
+        <p className="text-[14px] text-gray-500 mb-5">
+          This data is from{' '}
+          <a
+            href="https://portal.earthsense.co.uk/BrightonHoveandSussexPublic/analysis"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-teal no-underline"
+          >
+            Brighton &amp; Hove's Air Quality Portal
+          </a>
+          {' '}– based on a sensor at Elm Grove
+        </p>
 
         {/* Tabs */}
         <div className="flex bg-gray-100 rounded-[10px] p-1 gap-1 mb-5">
