@@ -1,17 +1,20 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'elmgrove2026'
-
 export default function AdminGate() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState(false)
   const [show, setShow] = useState(false)
   const navigate = useNavigate()
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    if (password === ADMIN_PASSWORD) {
+    const res = await fetch('/.netlify/functions/admin-auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password }),
+    })
+    if (res.ok) {
       sessionStorage.setItem('admin_auth', '1')
       navigate('/admin/dashboard')
     } else {
