@@ -15,6 +15,9 @@ dist-ssr
 # EarthSense CSV exports
 *.csv
 
+# Local document files
+*.rtf
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

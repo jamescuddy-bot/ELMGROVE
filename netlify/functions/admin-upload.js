@@ -102,21 +102,25 @@ export default async (req) => {
   }
 
   const dates = Object.keys(byDate).sort()
-  let count = 0
 
-  for (const dateStr of dates) {
-    const { dropoff, pickup } = byDate[dateStr]
-    const dropoffAvg = avg(dropoff)
-    const pickupAvg = avg(pickup)
-    if (dropoffAvg === null && pickupAvg === null) continue
+  const entries = dates
+    .map(dateStr => {
+      const { dropoff, pickup } = byDate[dateStr]
+      const dropoffAvg = avg(dropoff)
+      const pickupAvg = avg(pickup)
+      if (dropoffAvg === null && pickupAvg === null) return null
+      return { dateStr, dropoffAvg, pickupAvg }
+    })
+    .filter(Boolean)
 
-    const key = `day:${dateStr.replace(/\//g, '-')}`
-    await store.setJSON(key, { date: dateStr, dropoff: dropoffAvg, pickup: pickupAvg })
-    count++
-  }
+  await Promise.all(
+    entries.map(({ dateStr, dropoffAvg, pickupAvg }) =>
+      store.setJSON(`day:${dateStr.replace(/\//g, '-')}`, { date: dateStr, dropoff: dropoffAvg, pickup: pickupAvg })
+    )
+  )
 
   return new Response(
-    JSON.stringify({ ok: true, count, from: dates[0] || '', to: dates[dates.length - 1] || '' }),
+    JSON.stringify({ ok: true, count: entries.length, from: dates[0] || '', to: dates[dates.length - 1] || '' }),
     { status: 200, headers: { 'Content-Type': 'application/json' } }
   )
 }
