@@ -39,7 +39,7 @@ export default function No2() {
         <section className="flex flex-col gap-3">
           <div className="flex items-center gap-2.5">
             <div className="w-1 h-6 bg-[#EF476F] rounded-sm flex-shrink-0" />
-            <h2 className="text-[18px] font-bold text-ink">What is NO₂?</h2>
+            <h2 className="text-[18px] font-bold text-ink">What are the impacts of NO₂?</h2>
           </div>
           <p className="text-[15px] text-gray-500 leading-relaxed">
             Nitrogen dioxide (NO₂) is a gas produced when fuel is burned — primarily by vehicle
@@ -51,23 +51,49 @@ export default function No2() {
             developing, regular exposure can affect long-term lung health and worsen conditions
             like asthma.
           </p>
+
+          <div className="flex flex-col gap-3 mt-1">
+            {[
+              {
+                title: 'Lungs don\'t recover',
+                body: 'NO₂ causes permanent deficits in lung development in children aged 10–18 that carry into adulthood.',
+                source: 'NEJM, Children\'s Health Study',
+                href: 'https://www.nejm.org/doi/full/10.1056/NEJMoa040610',
+              },
+              {
+                title: 'It likely causes asthma',
+                body: 'Scientific evidence suggests NO₂ exposure doesn\'t just worsen asthma in children — it can cause it.',
+                source: 'American Lung Association, 2022',
+                href: 'https://www.lung.org/clean-air/outdoors/what-makes-air-unhealthy/nitrogen-dioxide',
+              },
+              {
+                title: 'Children get a bigger dose',
+                body: 'Children breathe faster, are more active, and are shorter — meaning they inhale more traffic exhaust, at higher concentrations, than adults standing next to them.',
+                source: 'European Environment Agency',
+                href: 'https://www.eea.europa.eu/publications/air-pollution-and-childrens-health',
+              },
+            ].map(({ title, body, source, href }) => (
+              <div key={title} className="bg-gray-50 rounded-[10px] px-4 py-4 flex flex-col gap-1.5">
+                <span className="text-[14px] font-bold text-ink">{title}</span>
+                <p className="text-[14px] text-gray-500 leading-relaxed m-0">{body}</p>
+                <a href={href} target="_blank" rel="noopener noreferrer" className="text-[12px] text-teal no-underline font-medium">
+                  {source} →
+                </a>
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* Section 2 */}
         <section className="flex flex-col gap-3">
           <div className="flex items-center gap-2.5">
             <div className="w-1 h-6 bg-[#FFC43D] rounded-sm flex-shrink-0" />
-            <h2 className="text-[18px] font-bold text-ink">It's not your fault — it's a shared problem</h2>
+            <h2 className="text-[18px] font-bold text-ink">A shared problem</h2>
           </div>
           <p className="text-[15px] text-gray-500 leading-relaxed">
-            Most parents driving to school aren't doing anything unusual. The problem is that
-            there's nowhere safe to stop, so engines idle on the kerb. That's an infrastructure
-            problem, not an individual one.
-          </p>
-          <p className="text-[15px] text-gray-500 leading-relaxed">
-            The most effective solutions — kerb-side planters, barriers, and clear idling
-            restrictions — require council action. They've worked at other schools. They could
-            work here too.
+            Driving to school isn't anything unusual. The problem is that there's nowhere safe
+            to stop, so engines idle on the kerb. The effective solutions like kerbside planters
+            require council action. It's worked at other schools, it can work here too.
           </p>
         </section>
 
