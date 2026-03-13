@@ -30,19 +30,66 @@ export default function AdminDashboard() {
   async function handleUpload(e) {
     const file = e.target.files[0]
     if (!file) return
-    const text = await file.text()
     setUploadStatus('uploading')
     try {
+      const text = await file.text()
+      const readings = parseCSV(text)
+      if (!readings) { setUploadStatus('error'); return }
       const res = await fetch('/.netlify/functions/admin-upload', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ csv: text, mode: uploadMode }),
+        body: JSON.stringify({ readings, mode: uploadMode }),
       })
       const data = await res.json()
       setUploadStatus({ count: data.count, from: data.from, to: data.to })
     } catch (_) {
       setUploadStatus('error')
     }
+  }
+
+  function parseCSV(text) {
+    const lines = text.split('\n').map(l => l.trim()).filter(Boolean)
+    const headerIdx = lines.findIndex(l => l.includes('Date (Local)'))
+    if (headerIdx === -1) return null
+
+    const headers = splitCSVLine(lines[headerIdx])
+    const dateCol = headers.indexOf('Date (Local)')
+    const timeCol = headers.indexOf('Time (Local)')
+    const no2Col  = headers.indexOf('NO2 Concentration')
+    if (dateCol === -1 || timeCol === -1 || no2Col === -1) return null
+
+    const byDate = {}
+    for (const line of lines.slice(headerIdx + 1)) {
+      const vals = splitCSVLine(line)
+      const dateStr = vals[dateCol]?.trim()
+      const time    = vals[timeCol]?.trim().substring(0, 5)
+      const no2     = parseFloat(vals[no2Col])
+      if (!dateStr || !time || isNaN(no2)) continue
+      const [y, m, d] = dateStr.split('/').map(Number)
+      const dow = new Date(y, m - 1, d).getDay()
+      if (dow === 0 || dow === 6) continue
+      if (!byDate[dateStr]) byDate[dateStr] = { dropoff: [], pickup: [] }
+      if (time >= '08:15' && time <= '09:15') byDate[dateStr].dropoff.push(no2)
+      if (time >= '14:45' && time <= '15:45') byDate[dateStr].pickup.push(no2)
+    }
+
+    const avg = arr => arr.length ? Math.round(arr.reduce((a, b) => a + b, 0) / arr.length * 10) / 10 : null
+
+    return Object.entries(byDate)
+      .map(([date, { dropoff, pickup }]) => ({ date, dropoff: avg(dropoff), pickup: avg(pickup) }))
+      .filter(r => r.dropoff !== null || r.pickup !== null)
+  }
+
+  function splitCSVLine(line) {
+    const result = []
+    let current = '', inQuotes = false
+    for (const ch of line) {
+      if (ch === '"') { inQuotes = !inQuotes }
+      else if (ch === ',' && !inQuotes) { result.push(current); current = '' }
+      else { current += ch }
+    }
+    result.push(current)
+    return result
   }
 
   async function handleDelete(phone) {
