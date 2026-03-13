@@ -30,7 +30,7 @@ export default function No2() {
 
   return (
     <Layout>
-      <div className="px-5 pt-6 pb-10 flex flex-col gap-8">
+      <div className="px-5 pt-6 pb-10 flex flex-col gap-8 bg-white">
         <h1 className="text-[26px] font-bold text-ink leading-snug">
           What is NO₂ and what you can do
         </h1>

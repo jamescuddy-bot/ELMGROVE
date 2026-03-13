@@ -3,6 +3,10 @@ export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
+      screens: {
+        tablet: '640px',
+        desktop: '1024px',
+      },
       colors: {
         teal: '#1B9AAA',
         'dark-red': '#B5173A',

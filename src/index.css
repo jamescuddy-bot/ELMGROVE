@@ -8,10 +8,31 @@
   box-sizing: border-box;
 }
 
+.word-chip {
+  font-size: 28px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 7px;
+  line-height: 1.25;
+}
+
+@media (min-width: 1024px) {
+  .word-chip {
+    font-size: 56px;
+    padding: 6px 18px;
+    border-radius: 14px;
+  }
+
+  .word-chip-wrap {
+    gap: 10px;
+    margin-bottom: 64px;
+  }
+}
+
 body {
   margin: 0;
   font-family: 'Inclusive Sans', sans-serif;
-  background: #ffffff;
+  background: #F1E5E5;
   color: #1a1a1a;
   -webkit-font-smoothing: antialiased;
 }

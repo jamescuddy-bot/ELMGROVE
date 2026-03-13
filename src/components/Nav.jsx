@@ -14,51 +14,65 @@ export default function Nav() {
   const { pathname } = useLocation()
 
   return (
-    <>
-      <nav className="flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-white sticky top-0 z-50">
+    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-white rounded-[14px] shadow-[0_2px_16px_rgba(0,0,0,0.08)] w-[calc(100%-32px)] max-w-[928px]">
+      {/* Header row */}
+      <div className="flex items-center justify-between px-5 py-3">
         <Link to="/" className="text-[15px] font-bold text-ink no-underline">
           Elm Grove air quality
         </Link>
-        <button
-          onClick={() => setOpen(true)}
-          className="flex flex-col gap-[5px] w-[22px] cursor-pointer bg-transparent border-none p-0"
-          aria-label="Open menu"
-        >
-          <span className="h-[2px] bg-ink rounded-sm block" />
-          <span className="h-[2px] bg-ink rounded-sm block" />
-          <span className="h-[2px] bg-ink rounded-sm block" />
-        </button>
-      </nav>
 
+        {/* Desktop inline links */}
+        <ul className="hidden desktop:flex list-none p-0 m-0 gap-6">
+          {links.map(({ to, label }) => (
+            <li key={to}>
+              <Link
+                to={to}
+                className={`text-[14px] font-medium no-underline ${
+                  pathname === to ? 'text-teal' : 'text-gray-400 hover:text-ink'
+                }`}
+              >
+                {label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        {/* Mobile/tablet hamburger */}
+        <button
+          onClick={() => setOpen(o => !o)}
+          className="desktop:hidden flex flex-col gap-[5px] w-[22px] cursor-pointer bg-transparent border-none p-0"
+          aria-label={open ? 'Close menu' : 'Open menu'}
+        >
+          {open ? (
+            <span className="text-[18px] text-gray-400 leading-none">✕</span>
+          ) : (
+            <>
+              <span className="h-[2px] bg-ink rounded-sm block" />
+              <span className="h-[2px] bg-ink rounded-sm block" />
+              <span className="h-[2px] bg-ink rounded-sm block" />
+            </>
+          )}
+        </button>
+      </div>
+
+      {/* Expanded menu */}
       {open && (
-        <div className="fixed inset-0 bg-white z-50 flex flex-col px-5 py-4">
-          <div className="flex items-center justify-between mb-10">
-            <span className="text-[15px] font-bold text-ink">Elm Grove air quality</span>
-            <button
-              onClick={() => setOpen(false)}
-              className="text-2xl text-gray-400 bg-transparent border-none cursor-pointer leading-none"
-              aria-label="Close menu"
-            >
-              ✕
-            </button>
-          </div>
-          <ul className="list-none p-0 m-0 flex flex-col gap-2">
-            {links.map(({ to, label }) => (
-              <li key={to}>
-                <Link
-                  to={to}
-                  onClick={() => setOpen(false)}
-                  className={`block text-[22px] font-bold py-3 no-underline border-b border-gray-100 ${
-                    pathname === to ? 'text-teal' : 'text-ink'
-                  }`}
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <ul className="desktop:hidden list-none p-0 m-0 px-5 pb-3 flex flex-col border-t border-gray-100">
+          {links.map(({ to, label }) => (
+            <li key={to}>
+              <Link
+                to={to}
+                onClick={() => setOpen(false)}
+                className={`block text-[17px] font-semibold py-3 no-underline border-b border-gray-100 last:border-0 ${
+                  pathname === to ? 'text-teal' : 'text-ink'
+                }`}
+              >
+                {label}
+              </Link>
+            </li>
+          ))}
+        </ul>
       )}
-    </>
+    </nav>
   )
 }

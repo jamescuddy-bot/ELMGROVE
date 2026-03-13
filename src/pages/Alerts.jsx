@@ -103,7 +103,7 @@ export default function Alerts() {
 
   return (
     <Layout>
-      <form onSubmit={handleSubmit} className="px-5 pt-6 pb-8 flex flex-col gap-6">
+      <form onSubmit={handleSubmit} className="px-5 pt-6 pb-8 flex flex-col gap-6 bg-white">
         {/* Intro */}
         <div className="flex flex-col gap-2">
           <h1 className="text-[26px] font-bold text-ink">Early NO₂ alerts</h1>

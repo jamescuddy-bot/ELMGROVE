@@ -1,0 +1,55 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww14960\viewh15820\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Hi Tim,\
+\
+Hope you're well. \
+I live down at number 56 Cobden Rd.\
+ \
+I wanted to get in touch about something I've been digging into over the last few weeks; the air quality outside Elm Grove Primary at drop-off and pickup times, specifically the NO2 levels. \
+\
+I know you've been involved with the AirSense portal (it's great!) so you're probably aware of this already, but I've done some analysis specifically on the sensor readings at the school gate that I think present a worrying picture. \
+\
+A quick summary of what the data shows:\
+\
+NO2 getting worse.\
+The monthly mean NO\uc0\u8322  has risen from around 14 \u956 g/m\'b3 in summer 2025 to 28.9 \u956 g/m\'b3 in January 2026, roughly doubling over six months, and consistently above the WHO 24-hour guideline of 25 \u956 g/m\'b3 throughout the autumn and winter.\
+\
+Drop-off exceedances are the norm, not the exception. \
+Looking at the last two months of complete data (January and February 2026), NO\uc0\u8322  at drop-off exceeded the WHO safe limit of 25 \u956 g/m\'b3 on 31 out of 34 weekday mornings; that's 91% of school days. The average drop-off reading in January was 43 \u956 g/m\'b3, with spikes reaching over 113 \u956 g/m\'b3 on the worst days.\
+\
+The data points to idling traffic\
+The single strongest predictor of a bad drop-off reading is the level of nitric oxide (NO) in the 6\'967am window. NO is a direct combustion product from vehicle exhausts, and its correlation with drop-off NO\uc0\u8322  is r = 0.75. On the worst mornings, ozone at the sensor is effectively zero, a clear sign of ozone being scrubbed out by exhaust fumes. The weekday-versus-weekend pattern shows a sharp peak specifically during school run hours that isn't there on weekends. This strongly points to idling outside the gate rather than background traffic.\
+\
+As you'll know, the health implications for kids at this age; lungs still developing, high breathing rates, are well documented.\
+\
+An early warning signal exists\
+One thing that I found particularly interesting: the overnight NO\uc0\u8322  level (midnight to 6am) is a statistically significant predictor of whether the WHO limit will be exceeded at drop-off the following morning (r = 0.40). \
+The night before (around 9 pm) a prediction can be made with reasonable accuracy. This alert misses roughly 1 in 8 bad mornings and may send false alarms on some fine mornings. \
+A same-morning alert based on the 6am would catch 9 in 10 bad mornings, though obviously gives less time to change plans.\
+\
+\
+I've built a proof-of-concept web app that shows parents recent air quality at the school gate and is designed to send SMS alerts the evening before a predicted bad morning: \
+\
+https://elmgrove.netlify.app/\
+\
+Which brings me to a couple of asks:\
+\
+1. API access. At the moment the app works from manually downloaded CSV exports from the Air Quality Portal. To make it function automatically and sustainably, it would need API access to the EarthSense data. Is there an API available that the council would consider granting access to? Even read-only access to Device 392 would be enough to get this working.\
+\
+2. A chat. I'd love to hear your thoughts on this. Is the council already looking at interventions at school gates? Are there any current projects I should be aware of or could feed into? I think the data here makes a reasonable evidence base for physical measures. Even something as simple as planters outside the Hanover Convenience store or more greenery to prevent pavement parking and idling. Planters/SUDS would also help reduce surface runoff and flooding at the bottom of Elm Grove.   \
+\
+I know Elm Grove isn't unique, and that this is a city-wide problem, but I\'92m personally motivated to do something regarding the situation on Elm Grove  for obvious reasons. If the approach works here, there's no reason it couldn't be extended to other sensors or schools, or integrated into the portal.\
+\
+I've also shared this with the school directly. Their previous position has been that it's a council responsibility which is fair enough, but I will hopefully be meeting with them to get their take on this and discuss what they can do.  \
+\
+Would you be up for a quick chat at some point? I\'92m flexible with times and nearby! \
+\
+All the best\
+\
+James\
+07730619096}

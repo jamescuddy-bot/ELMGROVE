@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# EarthSense CSV exports
+*.csv
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

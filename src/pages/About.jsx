@@ -3,7 +3,7 @@ import Layout from '../components/Layout'
 export default function About() {
   return (
     <Layout>
-      <div className="px-5 pt-6 pb-10 flex flex-col gap-0">
+      <div className="px-5 pt-6 pb-10 flex flex-col gap-0 bg-white">
         <h1 className="text-[26px] font-bold text-ink mb-7">About</h1>
 
         {/* The data */}
