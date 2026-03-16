@@ -45,17 +45,17 @@ export default function HistoricalData() {
   const week = weeks[weekIndex]
 
   return (
-    <Layout>
-      <div className="flex flex-col flex-1 bg-[#F1E5E5]">
+    <Layout bgColor="#F1DBC4">
+      <div className="flex flex-col flex-1 bg-[#F1DBC4]">
         <div className="px-5 pt-10 pb-8 flex flex-col gap-4">
           <div className="flex flex-wrap gap-2">
             {['Data', 'and', 'trends'].map(word => (
-              <span key={word} className="inline-block bg-[#E8D1D1] rounded-[7px] py-[3px] px-[9px] text-[26px] font-semibold text-[#1A1A1A] leading-[1.25]">
+              <span key={word} className="inline-block bg-[#EC4612] rounded-[7px] py-[3px] px-[9px] text-[26px] font-semibold text-white leading-[1.25]">
                 {word}
               </span>
             ))}
           </div>
-          <p className="text-[20px] font-semibold text-[#635657] leading-[1.2] m-0">
+          <p className="text-[20px] font-semibold text-[#EC4612] leading-[1.2] m-0">
             Analysis of data from Brighton &amp; Hove's Air Quality Portal gives a detailed picture of what NO₂ levels look like at the school gate.
           </p>
         </div>
@@ -63,12 +63,12 @@ export default function HistoricalData() {
         <div className="flex flex-col flex-1 px-5 pt-8 pb-10 bg-white rounded-t-[40px]">
 
         {/* Tabs */}
-        <div className="flex bg-gray-100 rounded-[10px] p-1 gap-1 mb-5">
+        <div className="flex bg-gray-100 rounded-full p-1 gap-1 mb-5">
           {[['week', 'Week by week'], ['trends', 'Historical trends']].map(([val, label]) => (
             <button
               key={val}
               onClick={() => setTab(val)}
-              className={`flex-1 py-2.5 rounded-[7px] text-[14px] border-none cursor-pointer transition-all ${
+              className={`flex-1 py-2.5 rounded-full text-[14px] border-none cursor-pointer transition-all ${
                 tab === val
                   ? 'bg-white font-bold text-ink shadow-sm'
                   : 'bg-transparent text-gray-400 font-normal'
@@ -118,14 +118,17 @@ export default function HistoricalData() {
                 </div>
 
                 {/* Summary */}
-                {week.summary && (
-                  <div className="border-l-4 border-[#EF476F] bg-[#fff5f7] rounded-r-[10px] px-4 py-4 mb-5">
-                    <p className="text-[18px] font-bold text-ink leading-snug mb-1">
-                      {week.summary}
-                    </p>
-                    <p className="text-[13px] text-gray-400">{week.label} · Safe limit: 25 μg/m³</p>
-                  </div>
-                )}
+                {week.summary && (() => {
+                  const isGood = week.summary.startsWith('0 of')
+                  return (
+                    <div className={`border-l-4 rounded-r-[10px] px-4 py-4 mb-5 ${isGood ? 'border-[#059669] bg-[#F0FDF8]' : 'border-[#EF476F] bg-[#fff5f7]'}`}>
+                      <p className="text-[18px] font-bold text-ink leading-snug mb-1">
+                        {week.summary}
+                      </p>
+                      <p className="text-[13px] text-gray-400">{week.label} · Safe limit: 25 μg/m³</p>
+                    </div>
+                  )
+                })()}
 
                 {/* Column headers */}
                 <div className="flex items-center px-1 mb-2">

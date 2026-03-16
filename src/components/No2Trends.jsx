@@ -80,7 +80,7 @@ function ChartTooltip({ active, payload, label }) {
       {payload.map((p, i) => p.value != null && (
         <div key={i} style={{display:'flex', gap:6, alignItems:'center'}}>
           <span style={{width:8, height:8, borderRadius:'50%', background:p.color, display:'inline-block'}} />
-          <span style={{color:'#6b7280'}}>{p.name}:</span>
+          <span style={{color:'#333333'}}>{p.name}:</span>
           <span style={{fontWeight:600}}>
             {typeof p.value === 'number' ? p.value.toFixed(1) : p.value}
             {(p.name === 'All year' || p.name === 'Winter' || p.name === 'Summer') ? ' μg/m³' : ''}
@@ -94,7 +94,7 @@ function ChartTooltip({ active, payload, label }) {
 function SectionLabel({ text }) {
   return (
     <div style={{marginBottom:14}}>
-      <h2 style={{margin:0, fontSize:28, fontWeight:600, color:'#333333'}}>{text}</h2>
+      <h2 style={{margin:0, fontSize:24, fontWeight:600, color:'#333333'}}>{text}</h2>
     </div>
   )
 }
@@ -105,13 +105,14 @@ function Divider() {
 
 function StatCallout({ value, label, accent }) {
   return (
-    <div style={{
-      display:'inline-flex', flexDirection:'column', alignItems:'center',
-      background:'#fff', border:`1.5px solid ${accent || '#EF476F'}`,
-      borderRadius:10, padding:'14px 20px', minWidth:130,
-    }}>
-      <span style={{fontSize:32, fontWeight:800, color:accent || '#EF476F', lineHeight:1}}>{value}</span>
-      <span style={{fontSize:12, color:'#6b7280', marginTop:6, textAlign:'center', maxWidth:160}}>{label}</span>
+    <div style={{display:'flex', flexDirection:'column', gap:10, marginBottom:8}}>
+      <span style={{
+        display:'inline-block', alignSelf:'flex-start',
+        background: accent || '#EF476F', color:'#fff',
+        fontSize:28, fontWeight:800, lineHeight:1,
+        borderRadius:10, padding:'10px 16px',
+      }}>{value}</span>
+      <span style={{fontSize:15, color:'#333333', lineHeight:1.5}}>{label}</span>
     </div>
   )
 }
@@ -127,7 +128,7 @@ function Panel({ children }) {
 function ChartTitle({ title, sub }) {
   return (
     <div style={{marginBottom:16}}>
-      <div style={{fontSize:12, color:'#333333', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:2, fontWeight:600}}>{title}</div>
+      <div style={{fontSize:12, color:'#333333', letterSpacing:'0.02em', marginBottom:2, fontWeight:600}}>{title}</div>
       {sub && <div style={{fontSize:12, color:'#9ca3af'}}>{sub}</div>}
     </div>
   )
@@ -172,7 +173,7 @@ export default function No2Trends() {
     <div style={{fontFamily:"'Inclusive Sans', sans-serif", color:'#1a1a1a'}}>
 
       {/* Intro */}
-      <p style={{fontSize:14, lineHeight:1.8, color:'#6b7280', margin:'0 0 28px'}}>
+      <p style={{fontSize:14, lineHeight:1.8, color:'#333333', margin:'0 0 28px'}}>
         Analysis of 59,242 sensor readings from June 2024 to March 2026.
         The WHO safe limit for NO₂ is 25 μg/m³ as a 24-hour average.
       </p>
@@ -180,17 +181,17 @@ export default function No2Trends() {
       {/* ── SECTION 1 ── */}
       <SectionLabel text="How bad is it really?" />
 
-      <p style={{fontSize:14, lineHeight:1.8, color:'#6b7280', margin:'0 0 20px'}}>
+      <p style={{fontSize:14, lineHeight:1.8, color:'#333333', margin:'0 0 20px'}}>
         The WHO set its 25 μg/m³ daily limit because prolonged exposure above this level is linked to
         respiratory harm in children — reduced lung development, increased asthma risk, and higher susceptibility
         to infection. At Elm Grove, this is not an occasional breach. It is the winter norm. In January 2026 alone,
         the daily average exceeded the WHO limit on 27 out of 31 days.
       </p>
 
-      <div style={{display:'flex', gap:12, flexWrap:'wrap', marginBottom:8}}>
+      <div style={{display:'flex', flexDirection:'column', gap:24, marginBottom:8}}>
         {stats2026 && (
           <StatCallout
-            value={`${stats2026.exceeded}/${stats2026.total}`}
+            value={`${stats2026.exceeded} of ${stats2026.total}`}
             label="school days in 2026 above WHO 25 μg/m³ daily limit"
             accent="#EF476F"
           />
@@ -199,7 +200,7 @@ export default function No2Trends() {
           <StatCallout
             value={`${annualPctOver}%`}
             label="above the WHO annual NO₂ limit of 10 μg/m³ (2025 mean)"
-            accent="#d4900a"
+            accent="#EF476F"
           />
         )}
       </div>
@@ -209,31 +210,35 @@ export default function No2Trends() {
       {/* ── SECTION 2 ── */}
       <SectionLabel text="Are things getting better or worse?" />
 
-      <p style={{fontSize:14, lineHeight:1.8, color:'#6b7280', margin:'0 0 24px'}}>
+      <p style={{fontSize:14, lineHeight:1.8, color:'#333333', margin:'0 0 24px'}}>
         Worse. After accounting for seasonal variation, NO₂ is rising at an estimated
         <strong style={{color:'#EF476F'}}> +2.75 μg/m³ per year</strong>. Each successive winter season
         has produced more readings above 40 μg/m³ than the last.
       </p>
 
       <Panel>
-        <ChartTitle title="Monthly readings exceeding 40 μg/m³" sub="UK limit value threshold · Jun 2024 – Mar 2026" />
-        <ResponsiveContainer width="100%" height={220}>
-          <BarChart data={exceedanceData} margin={{top:4, right:8, left:0, bottom:0}}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" vertical={false} />
-            <XAxis dataKey="label" tick={{fill:'#9ca3af', fontSize:10}} interval={0} angle={-90} textAnchor="end" height={45} />
-            <YAxis tick={{fill:'#9ca3af', fontSize:11}} width={36} />
-            <Tooltip content={<ChartTooltip />} />
-<ReferenceLine x="Jun 24" stroke="#ccc" strokeWidth={1} label={{value:'Summer', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
-            <ReferenceLine x="Sep 24" stroke="#ccc" strokeWidth={1} label={{value:'Autumn', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
-            <ReferenceLine x="Nov 24" stroke="#ccc" strokeWidth={1} label={{value:'Winter', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
-            <ReferenceLine x="Mar 25" stroke="#ccc" strokeWidth={1} label={{value:'Spring', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
-            <ReferenceLine x="Jun 25" stroke="#ccc" strokeWidth={1} label={{value:'Summer', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
-            <ReferenceLine x="Sep 25" stroke="#ccc" strokeWidth={1} label={{value:'Autumn', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
-            <ReferenceLine x="Nov 25" stroke="#ccc" strokeWidth={1} label={{value:'Winter', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
-            <ReferenceLine x="Mar 26" stroke="#ccc" strokeWidth={1} label={{value:'Spring', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
-            <Bar dataKey="exc" name="Exceedances" fill="#EF476F" fillOpacity={0.85} radius={[3,3,0,0]} />
-          </BarChart>
-        </ResponsiveContainer>
+        <ChartTitle title="Monthly Readings Exceeding 40 μg/m³" sub="UK limit value threshold · Jun 2024 – Mar 2026" />
+        <div style={{overflowX:'auto', WebkitOverflowScrolling:'touch'}}>
+          <div style={{minWidth:600}}>
+            <ResponsiveContainer width="100%" height={220}>
+              <BarChart data={exceedanceData} margin={{top:4, right:8, left:0, bottom:0}}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" vertical={false} />
+                <XAxis dataKey="label" tick={{fill:'#9ca3af', fontSize:10}} interval={0} angle={-90} textAnchor="end" height={45} />
+                <YAxis tick={{fill:'#9ca3af', fontSize:11}} width={36} />
+                <Tooltip content={<ChartTooltip />} />
+                <ReferenceLine x="Jun 24" stroke="#ccc" strokeWidth={1} label={{value:'Summer', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
+                <ReferenceLine x="Sep 24" stroke="#ccc" strokeWidth={1} label={{value:'Autumn', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
+                <ReferenceLine x="Nov 24" stroke="#ccc" strokeWidth={1} label={{value:'Winter', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
+                <ReferenceLine x="Mar 25" stroke="#ccc" strokeWidth={1} label={{value:'Spring', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
+                <ReferenceLine x="Jun 25" stroke="#ccc" strokeWidth={1} label={{value:'Summer', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
+                <ReferenceLine x="Sep 25" stroke="#ccc" strokeWidth={1} label={{value:'Autumn', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
+                <ReferenceLine x="Nov 25" stroke="#ccc" strokeWidth={1} label={{value:'Winter', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
+                <ReferenceLine x="Mar 26" stroke="#ccc" strokeWidth={1} label={{value:'Spring', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
+                <Bar dataKey="exc" name="Exceedances" fill="#EF476F" fillOpacity={0.85} radius={[3,3,0,0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
       </Panel>
 
 
@@ -242,7 +247,7 @@ export default function No2Trends() {
       {/* ── SECTION 3 ── */}
       <SectionLabel text="When's it worst?" />
 
-      <p style={{fontSize:14, lineHeight:1.8, color:'#6b7280', margin:'0 0 24px'}}>
+      <p style={{fontSize:14, lineHeight:1.8, color:'#333333', margin:'0 0 24px'}}>
         NO₂ spikes twice a day — and both peaks fall directly on school opening and closing times.
         The morning school run (<strong style={{color:'#333333'}}>08:30–09:05</strong>) sits inside the
         daily morning peak. The afternoon pick-up window (<strong style={{color:'#333333'}}>15:10–15:45</strong>) lands
@@ -252,7 +257,7 @@ export default function No2Trends() {
 
       <Panel>
         <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:16, flexWrap:'wrap', gap:10}}>
-          <ChartTitle title="Average NO₂ by hour of day" sub="Mean across all readings in dataset" />
+          <ChartTitle title="Average NO₂ by Hour of Day" sub="Mean across all readings in dataset" />
           <div style={{display:'flex', gap:4}}>
             {[['all','All year'],['winter','Winter'],['summer','Summer']].map(([v,l]) => (
               <button key={v} onClick={() => setHourlyView(v)} style={{

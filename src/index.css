@@ -29,6 +29,12 @@
   }
 }
 
+@media (min-width: 768px) {
+  p {
+    max-width: 70%;
+  }
+}
+
 body {
   margin: 0;
   font-family: 'Inclusive Sans', sans-serif;

@@ -182,36 +182,24 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="flex justify-center gap-1.5 px-5 my-8">
-          {statements.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => jumpTo(i)}
-              className={`h-[5px] rounded-full border-none cursor-pointer p-0 transition-all duration-300 ${
-                i === stmtIndex ? 'w-5 bg-ink' : 'w-[5px] bg-gray-200'
-              }`}
-              aria-label={`Statement ${i + 1}`}
-            />
-          ))}
-        </div>
 
         <div className="flex flex-col desktop:flex-row gap-6 desktop:gap-10 px-5 desktop:px-16 pt-8 desktop:pt-16 pb-12 desktop:pb-16 bg-white rounded-t-[40px]">
-          <Link to="/data" className="no-underline block p-7 rounded-tl-3xl rounded-tr-[32px] rounded-bl-[30px] rounded-br-[32px] flex-1 bg-[#F1DBC4]">
+          <Link to="/data" className="no-underline block p-7 rounded-tl-3xl rounded-tr-[32px] rounded-bl-[30px] rounded-br-[32px] flex-1 bg-[#F1DBC4] min-h-[360px] flex flex-col">
             <h2 className="text-[28px] font-semibold text-[#EC4612] leading-tight mb-2">Data and trends</h2>
-            <p className="text-[16px] text-[#EC4612] mb-8 opacity-80">Text here to be updated shortly.</p>
-            <div className="rounded-full bg-[#EC4612] text-white text-[15px] font-bold text-center py-3.5">Text to be updated</div>
+            <p className="text-[20px] font-medium text-[#EC4612] opacity-80">What NO₂ levels look like at the school gate</p>
+            <div className="mt-auto rounded-full bg-[#EC4612] text-white text-[15px] font-bold text-center py-3.5">See data and trends</div>
           </Link>
 
-          <Link to="/alerts" className="no-underline block p-7 rounded-tl-3xl rounded-tr-[32px] rounded-bl-[30px] rounded-br-[32px] flex-1 bg-[#8BF0F8]/35">
+          <Link to="/alerts" className="no-underline block p-7 rounded-tl-3xl rounded-tr-[32px] rounded-bl-[30px] rounded-br-[32px] flex-1 bg-[#8BF0F8]/35 min-h-[360px] flex flex-col">
             <h2 className="text-[28px] font-semibold text-[#1F8A92] leading-tight mb-2">NO₂ alerts</h2>
-            <p className="text-[16px] text-[#1F8A92] mb-8 opacity-80">Text here to be updated shortly.</p>
-            <div className="rounded-full bg-[#1F8A92] text-white text-[15px] font-bold text-center py-3.5">Text to be updated</div>
+            <p className="text-[20px] font-medium text-[#1F8A92] opacity-80">Set an alert for when levels are forecast to be very high at drop off.</p>
+            <div className="mt-auto rounded-full bg-[#1F8A92] text-white text-[15px] font-bold text-center py-3.5">Get an early alert</div>
           </Link>
 
-          <Link to="/no2" className="no-underline block p-7 rounded-tl-3xl rounded-tr-[32px] rounded-bl-[30px] rounded-br-[32px] flex-1 bg-[#FDD0CF]">
+          <Link to="/no2" className="no-underline block p-7 rounded-tl-3xl rounded-tr-[32px] rounded-bl-[30px] rounded-br-[32px] flex-1 bg-[#FDD0CF] min-h-[360px] flex flex-col">
             <h2 className="text-[28px] font-semibold text-[#EC4612] leading-tight mb-2">What is NO₂?</h2>
-            <p className="text-[16px] text-[#EC4612] mb-8 opacity-80">Text here to be updated shortly.</p>
-            <div className="rounded-full bg-[#EC4612] text-white text-[15px] font-bold text-center py-3.5">Text to be updated</div>
+            <p className="text-[20px] font-medium text-[#EC4612] opacity-80">What is it and what we can do about it.</p>
+            <div className="mt-auto rounded-full bg-[#EC4612] text-white text-[15px] font-bold text-center py-3.5">Find out more</div>
           </Link>
         </div>
 

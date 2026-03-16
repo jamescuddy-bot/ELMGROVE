@@ -29,24 +29,25 @@ export default function No2() {
   }
 
   return (
-    <Layout>
-      <div className="flex flex-col flex-1 bg-[#F1E5E5]">
-        <div className="px-5 pt-10 pb-8">
-          <h1 className="text-[26px] font-bold text-ink leading-snug">
-            What is NO₂ and what you can do
-          </h1>
+    <Layout bgColor="#FDD0CF">
+      <div className="flex flex-col flex-1 bg-[#FDD0CF]">
+        <div className="px-5 pt-10 pb-8 flex flex-col gap-4">
+          <div className="flex flex-wrap gap-2">
+            {['What', 'is', 'NO₂', 'and', 'what', 'you', 'can', 'do'].map(word => (
+              <span key={word} className="inline-block bg-[#EC4612] rounded-[7px] py-[3px] px-[9px] text-[26px] font-semibold text-white leading-[1.25]">
+                {word}
+              </span>
+            ))}
+          </div>
         </div>
 
         <div className="flex flex-col gap-8 px-5 pt-8 pb-10 bg-white rounded-t-[40px]">
 
         {/* Section 1 */}
         <section className="flex flex-col gap-3">
-          <div className="flex items-center gap-2.5">
-            <div className="w-1 h-6 bg-[#EF476F] rounded-sm flex-shrink-0" />
-            <h2 className="text-[18px] font-bold text-ink">What are the impacts of NO₂?</h2>
-          </div>
+          <h2 className="text-[24px] font-semibold text-[#333333] pt-5">What are the impacts of NO₂?</h2>
           <p className="text-[15px] text-[#333333] leading-[1.5]">
-            Nitrogen dioxide (NO₂) is a gas produced when fuel is burned — primarily by vehicle
+            Nitrogen dioxide (NO₂) is a gas produced when fuel is burned, primarily by vehicle
             engines. At school gates, the main source is cars and vans idling at the kerb during
             drop-off and pick-up.
           </p>
@@ -66,19 +67,19 @@ export default function No2() {
               },
               {
                 title: 'It likely causes asthma',
-                body: 'Scientific evidence suggests NO₂ exposure doesn\'t just worsen asthma in children — it can cause it.',
+                body: 'Scientific evidence suggests NO₂ exposure doesn\'t just worsen asthma in children, it can cause it.',
                 source: 'American Lung Association, 2022',
                 href: 'https://www.lung.org/clean-air/outdoors/what-makes-air-unhealthy/nitrogen-dioxide',
               },
               {
                 title: 'Children get a bigger dose',
-                body: 'Children breathe faster, are more active, and are shorter — meaning they inhale more traffic exhaust, at higher concentrations, than adults standing next to them.',
+                body: 'Children breathe faster, are more active, and are shorter, meaning they inhale more traffic exhaust, at higher concentrations, than adults standing next to them.',
                 source: 'European Environment Agency',
                 href: 'https://www.eea.europa.eu/publications/air-pollution-and-childrens-health',
               },
             ].map(({ title, body, source, href }) => (
               <div key={title} className="bg-gray-50 rounded-[10px] px-4 py-4 flex flex-col gap-1.5">
-                <span className="text-[14px] font-bold text-ink">{title}</span>
+                <span className="text-[14px] font-semibold text-ink">{title}</span>
                 <p className="text-[14px] text-[#333333] leading-[1.5] m-0">{body}</p>
                 <a href={href} target="_blank" rel="noopener noreferrer" className="text-[12px] text-teal no-underline font-medium">
                   {source} →
@@ -90,10 +91,7 @@ export default function No2() {
 
         {/* Section 2 */}
         <section className="flex flex-col gap-3">
-          <div className="flex items-center gap-2.5">
-            <div className="w-1 h-6 bg-[#FFC43D] rounded-sm flex-shrink-0" />
-            <h2 className="text-[18px] font-bold text-ink">A shared problem</h2>
-          </div>
+          <h2 className="text-[24px] font-semibold text-[#333333]">A shared problem</h2>
           <p className="text-[15px] text-[#333333] leading-[1.5]">
             Driving to school isn't anything unusual. The problem is that there's nowhere safe
             to stop, so engines idle on the kerb. The effective solutions like kerbside planters
@@ -103,13 +101,10 @@ export default function No2() {
 
         {/* Section 3 */}
         <section className="flex flex-col gap-3">
-          <div className="flex items-center gap-2.5">
-            <div className="w-1 h-6 bg-teal rounded-sm flex-shrink-0" />
-            <h2 className="text-[18px] font-bold text-ink">What can you do?</h2>
-          </div>
+          <h2 className="text-[24px] font-semibold text-[#333333]">What can you do?</h2>
           <p className="text-[15px] text-[#333333] leading-[1.5]">
             Write to your local councillor asking them to fund kerb-side planters or barriers
-            outside Elm Grove Primary. We've drafted a letter — edit it to make it your own,
+            outside Elm Grove Primary. We've drafted a letter, edit it to make it your own,
             then copy and send.
           </p>
 

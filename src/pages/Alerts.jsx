@@ -68,8 +68,8 @@ export default function Alerts() {
 
   if (submitted) {
     return (
-      <Layout>
-        <div className="flex flex-col flex-1 bg-[#F1E5E5]">
+      <Layout bgColor="#D6FAFD">
+        <div className="flex flex-col flex-1 bg-[#D6FAFD]">
         <div className="px-5 pt-10 pb-8 flex flex-col gap-6">
           <div className="w-14 h-14 rounded-full bg-[#F0FDF8] flex items-center justify-center">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -104,14 +104,18 @@ export default function Alerts() {
   }
 
   return (
-    <Layout>
-      <div className="flex flex-col flex-1 bg-[#F1E5E5]">
-        <div className="px-5 pt-10 pb-8">
-          <h1 className="text-[26px] font-bold text-ink mb-2">Early NO₂ alerts</h1>
-          <p className="text-[15px] text-[#333333] leading-[1.5]">
-            Get a free text message when NO₂ levels at Elm Grove are forecast to be high. Alerts are
-            sent before drop-off so you have time to act. Reply STOP to any message to unsubscribe,
-            or use the link at the bottom of this page.
+    <Layout bgColor="#D6FAFD">
+      <div className="flex flex-col flex-1 bg-[#D6FAFD]">
+        <div className="px-5 pt-10 pb-8 flex flex-col gap-4">
+          <div className="flex flex-wrap gap-2">
+            {['Early', 'NO₂', 'alerts'].map(word => (
+              <span key={word} className="inline-block bg-[#1F8A92] rounded-[7px] py-[3px] px-[9px] text-[26px] font-semibold text-white leading-[1.25]">
+                {word}
+              </span>
+            ))}
+          </div>
+          <p className="text-[20px] font-semibold text-[#1F8A92] leading-[1.2] m-0">
+            Get a free text message when NO₂ levels at Elm Grove are forecast to be high. Alerts are sent before drop-off so you have time to act.
           </p>
         </div>
 
