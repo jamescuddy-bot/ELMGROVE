@@ -52,16 +52,23 @@ export default async (req) => {
     )
   ).filter(Boolean)
 
-  // Sort descending and find the most recent weekday
+  // Sort descending
   readings.sort((a, b) => b.date.localeCompare(a.date))
-  const mostRecent = readings[0]
 
   // Key from blob is day:YYYY-MM-DD but date in record is YYYY/MM/DD — normalise
   const normalise = d => d.replace(/\//g, '-')
-  const mostRecentDate = normalise(mostRecent.date)
+
+  // Find the most recent Friday in the data — that marks a complete week
+  const isFriday = dateStr => {
+    const [y, m, d] = dateStr.split('-').map(Number)
+    return new Date(y, m - 1, d).getDay() === 5
+  }
+
+  const mostRecentFriday = readings.find(r => isFriday(normalise(r.date)))
+  const referenceDate = mostRecentFriday ? normalise(mostRecentFriday.date) : normalise(readings[0].date)
 
   // Get the Mon–Fri week containing that date
-  const monday = getMondayOf(mostRecentDate)
+  const monday = getMondayOf(referenceDate)
   const friday = new Date(monday)
   friday.setDate(friday.getDate() + 4)
 

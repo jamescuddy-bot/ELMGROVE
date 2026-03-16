@@ -69,7 +69,8 @@ export default function Alerts() {
   if (submitted) {
     return (
       <Layout>
-        <div className="px-5 pt-16 pb-8 flex flex-col gap-6">
+        <div className="flex flex-col flex-1 bg-[#F1E5E5]">
+        <div className="px-5 pt-10 pb-8 flex flex-col gap-6">
           <div className="w-14 h-14 rounded-full bg-[#F0FDF8] flex items-center justify-center">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M5 13l4 4L19 7" stroke="#059669" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -78,24 +79,25 @@ export default function Alerts() {
 
           <h1 className="text-[28px] font-bold text-ink leading-snug">You're almost signed up.</h1>
 
-          <p className="text-[16px] text-gray-500 leading-relaxed">
+          <p className="text-[16px] text-[#333333] leading-[1.5]">
             We've sent a confirmation text to <strong className="text-ink">{phone}</strong>.
             Reply <strong className="text-ink">YES</strong> to complete your sign-up.
           </p>
 
           <div className="bg-mint-tint rounded-[10px] p-4 flex flex-col gap-1.5">
             <span className="text-[13px] font-semibold text-ink">Your preferences</span>
-            <span className="text-[13px] text-gray-500">
+            <span className="text-[13px] text-[#333333]">
               Alert level: {level === 'all' ? 'All exceedances (25+ μg/m³)' : 'Severe spikes only (40+ μg/m³)'}
             </span>
-            <span className="text-[13px] text-gray-500">
+            <span className="text-[13px] text-[#333333]">
               Alert timing: {timing === 'evening' ? 'Evening before (approx. 21:00)' : 'Evening + morning confirmation (07:00)'}
             </span>
           </div>
 
-          <p className="text-[13px] text-gray-300 leading-relaxed">
+          <p className="text-[13px] text-gray-300 leading-[1.5]">
             To stop receiving alerts at any time, reply <strong>STOP</strong> to any message.
           </p>
+        </div>
         </div>
       </Layout>
     )
@@ -103,17 +105,17 @@ export default function Alerts() {
 
   return (
     <Layout>
-      <form onSubmit={handleSubmit} className="px-5 pt-6 pb-8 flex flex-col gap-6 bg-white">
-        {/* Intro */}
-        <div className="flex flex-col gap-2">
-          <h1 className="text-[26px] font-bold text-ink">Early NO₂ alerts</h1>
-          <p className="text-[15px] text-gray-500 leading-relaxed">
+      <div className="flex flex-col flex-1 bg-[#F1E5E5]">
+        <div className="px-5 pt-10 pb-8">
+          <h1 className="text-[26px] font-bold text-ink mb-2">Early NO₂ alerts</h1>
+          <p className="text-[15px] text-[#333333] leading-[1.5]">
             Get a free text message when NO₂ levels at Elm Grove are forecast to be high. Alerts are
             sent before drop-off so you have time to act. Reply STOP to any message to unsubscribe,
             or use the link at the bottom of this page.
           </p>
         </div>
 
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6 px-5 pt-8 pb-10 bg-white rounded-t-[40px]">
         {/* Phone */}
         <div className="flex flex-col gap-1.5">
           <label className="text-[13px] font-semibold text-ink">Mobile number</label>
@@ -208,7 +210,7 @@ export default function Alerts() {
 
         {/* Privacy */}
         <div className="bg-gray-50 rounded-[10px] px-4 py-3.5">
-          <p className="text-[13px] text-gray-500 leading-relaxed font-sans">
+          <p className="text-[13px] text-[#333333] leading-[1.5] font-sans">
             Your mobile number will only be used to send air quality alerts. It will never be shared.
             You can unsubscribe at any time by replying STOP.
           </p>
@@ -253,6 +255,7 @@ export default function Alerts() {
           )}
         </div>
       </form>
+      </div>
     </Layout>
   )
 }

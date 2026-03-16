@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, Cell, ReferenceLine, ReferenceArea, Area, AreaChart,
@@ -91,15 +91,10 @@ function ChartTooltip({ active, payload, label }) {
   )
 }
 
-function SectionLabel({ number, text }) {
+function SectionLabel({ text }) {
   return (
-    <div style={{display:'flex', alignItems:'center', gap:12, marginBottom:14}}>
-      <div style={{
-        width:28, height:28, borderRadius:'50%',
-        background:'#EF476F', display:'flex', alignItems:'center', justifyContent:'center',
-        fontSize:13, fontWeight:800, color:'#fff', flexShrink:0,
-      }}>{number}</div>
-      <h2 style={{margin:0, fontSize:20, fontWeight:700, color:'#1a1a1a', letterSpacing:'-0.02em'}}>{text}</h2>
+    <div style={{marginBottom:14}}>
+      <h2 style={{margin:0, fontSize:28, fontWeight:600, color:'#333333'}}>{text}</h2>
     </div>
   )
 }
@@ -132,7 +127,7 @@ function Panel({ children }) {
 function ChartTitle({ title, sub }) {
   return (
     <div style={{marginBottom:16}}>
-      <div style={{fontSize:12, color:'#6b7280', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:2, fontWeight:600}}>{title}</div>
+      <div style={{fontSize:12, color:'#333333', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:2, fontWeight:600}}>{title}</div>
       {sub && <div style={{fontSize:12, color:'#9ca3af'}}>{sub}</div>}
     </div>
   )
@@ -140,8 +135,38 @@ function ChartTitle({ title, sub }) {
 
 // ── MAIN ──────────────────────────────────────────────────────────────────────
 
+const WHO_ANNUAL = 10
+
+function calcYearStats(weeks, year) {
+  const yearWeeks = weeks.filter(w => w.weekStart && w.weekStart.startsWith(String(year)))
+  const allDays = yearWeeks.flatMap(w => w.days).filter(d => d.dropoff !== null || d.pickup !== null)
+  const exceeded = allDays.filter(d => (d.dropoff ?? 0) > 25 || (d.pickup ?? 0) > 25)
+  return { exceeded: exceeded.length, total: allDays.length }
+}
+
+function calcAnnualPctOver(weeks, year) {
+  const yearWeeks = weeks.filter(w => w.weekStart && w.weekStart.startsWith(String(year)))
+  const vals = yearWeeks.flatMap(w => w.days).flatMap(d => [d.dropoff, d.pickup]).filter(v => v !== null)
+  if (!vals.length) return null
+  const mean = vals.reduce((a, b) => a + b, 0) / vals.length
+  return Math.round((mean - WHO_ANNUAL) / WHO_ANNUAL * 100)
+}
+
 export default function No2Trends() {
   const [hourlyView, setHourlyView] = useState('all')
+  const [stats2026, setStats2026] = useState(null)
+  const [annualPctOver, setAnnualPctOver] = useState(null)
+
+  useEffect(() => {
+    fetch('/.netlify/functions/readings')
+      .then(r => r.json())
+      .then(data => {
+        const weeks = data.weeks || []
+        setStats2026(calcYearStats(weeks, 2026))
+        setAnnualPctOver(calcAnnualPctOver(weeks, 2025))
+      })
+      .catch(() => {})
+  }, [])
 
   return (
     <div style={{fontFamily:"'Inclusive Sans', sans-serif", color:'#1a1a1a'}}>
@@ -153,7 +178,7 @@ export default function No2Trends() {
       </p>
 
       {/* ── SECTION 1 ── */}
-      <SectionLabel number="1" text="How bad is it really?" />
+      <SectionLabel text="How bad is it really?" />
 
       <p style={{fontSize:14, lineHeight:1.8, color:'#6b7280', margin:'0 0 20px'}}>
         The WHO set its 25 μg/m³ daily limit because prolonged exposure above this level is linked to
@@ -163,20 +188,31 @@ export default function No2Trends() {
       </p>
 
       <div style={{display:'flex', gap:12, flexWrap:'wrap', marginBottom:8}}>
-        <StatCallout value="23/33" label="school days in 2026 above WHO 25 μg/m³ daily limit" accent="#EF476F" />
-        <StatCallout value="35/53" label="all days in 2026 with available data above WHO limit" accent="#e09a55" />
-        <StatCallout value="19.1" label="μg/m³ annual mean — nearly double the WHO annual guideline of 10" accent="#d4900a" />
+        {stats2026 && (
+          <StatCallout
+            value={`${stats2026.exceeded}/${stats2026.total}`}
+            label="school days in 2026 above WHO 25 μg/m³ daily limit"
+            accent="#EF476F"
+          />
+        )}
+        {annualPctOver !== null && (
+          <StatCallout
+            value={`${annualPctOver}%`}
+            label="above the WHO annual NO₂ limit of 10 μg/m³ (2025 mean)"
+            accent="#d4900a"
+          />
+        )}
       </div>
 
       <Divider />
 
       {/* ── SECTION 2 ── */}
-      <SectionLabel number="2" text="Are things getting better or worse?" />
+      <SectionLabel text="Are things getting better or worse?" />
 
       <p style={{fontSize:14, lineHeight:1.8, color:'#6b7280', margin:'0 0 24px'}}>
         Worse. After accounting for seasonal variation, NO₂ is rising at an estimated
         <strong style={{color:'#EF476F'}}> +2.75 μg/m³ per year</strong>. Each successive winter season
-        has produced more readings above 40 μg/m³ than the last. The problem is not staying the same — it is compounding.
+        has produced more readings above 40 μg/m³ than the last.
       </p>
 
       <Panel>
@@ -184,105 +220,32 @@ export default function No2Trends() {
         <ResponsiveContainer width="100%" height={220}>
           <BarChart data={exceedanceData} margin={{top:4, right:8, left:0, bottom:0}}>
             <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" vertical={false} />
-            <XAxis dataKey="label" tick={{fill:'#9ca3af', fontSize:10}} interval={1} />
-            <YAxis tick={{fill:'#9ca3af', fontSize:11}}
-              label={{value:'Readings', angle:-90, position:'insideLeft', fill:'#9ca3af', fontSize:11}} />
+            <XAxis dataKey="label" tick={{fill:'#9ca3af', fontSize:10}} interval={0} angle={-90} textAnchor="end" height={45} />
+            <YAxis tick={{fill:'#9ca3af', fontSize:11}} width={36} />
             <Tooltip content={<ChartTooltip />} />
-            <Bar dataKey="exc" name="Exceedances" radius={[3,3,0,0]}>
-              {exceedanceData.map((d, i) => (
-                <Cell key={i} fill={seasonColor[d.season]} fillOpacity={0.85} />
-              ))}
-            </Bar>
+<ReferenceLine x="Jun 24" stroke="#ccc" strokeWidth={1} label={{value:'Summer', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
+            <ReferenceLine x="Sep 24" stroke="#ccc" strokeWidth={1} label={{value:'Autumn', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
+            <ReferenceLine x="Nov 24" stroke="#ccc" strokeWidth={1} label={{value:'Winter', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
+            <ReferenceLine x="Mar 25" stroke="#ccc" strokeWidth={1} label={{value:'Spring', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
+            <ReferenceLine x="Jun 25" stroke="#ccc" strokeWidth={1} label={{value:'Summer', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
+            <ReferenceLine x="Sep 25" stroke="#ccc" strokeWidth={1} label={{value:'Autumn', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
+            <ReferenceLine x="Nov 25" stroke="#ccc" strokeWidth={1} label={{value:'Winter', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
+            <ReferenceLine x="Mar 26" stroke="#ccc" strokeWidth={1} label={{value:'Spring', position:'insideTopRight', fontSize:9, fill:'#999', angle:-90, dx:8}} />
+            <Bar dataKey="exc" name="Exceedances" fill="#EF476F" fillOpacity={0.85} radius={[3,3,0,0]} />
           </BarChart>
         </ResponsiveContainer>
-        <div style={{display:'flex', gap:14, marginTop:10, fontSize:11, flexWrap:'wrap'}}>
-          {Object.entries(seasonColor).map(([s, c]) => (
-            <span key={s} style={{color:c, fontWeight:600}}>■ {s.charAt(0).toUpperCase() + s.slice(1)}</span>
-          ))}
-        </div>
       </Panel>
 
-      <p style={{fontSize:14, lineHeight:1.8, color:'#6b7280', margin:'24px 0'}}>
-        <strong style={{color:'#1a1a1a'}}>Winter peaks are getting longer.</strong> In 2024,
-        only November averaged above 20 μg/m³. In 2025, five months crossed that threshold.
-        The high-pollution season is spreading into both autumn and spring.
-      </p>
-
-      {/* Winter season visual */}
-      <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, marginBottom:24}}>
-        {[
-          {year:'2024 (Jun–Dec only)', months:['Nov'], note:'1 month above 20 μg/m³'},
-          {year:'2025 (full year)',    months:['Jan','Feb','Mar','Nov','Dec'], note:'5 months above 20 μg/m³'},
-        ].map((yr, i) => (
-          <Panel key={i}>
-            <div style={{fontSize:11, color:'#9ca3af', textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:10, fontWeight:600}}>
-              {yr.year}
-            </div>
-            <div style={{display:'flex', gap:4, flexWrap:'wrap', marginBottom:10}}>
-              {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map(m => {
-                const active = yr.months.includes(m)
-                const greyedOut = i === 0 && ['Jan','Feb','Mar','Apr','May'].includes(m)
-                return (
-                  <div key={m} style={{
-                    padding:'3px 7px', borderRadius:4, fontSize:11, fontWeight: active ? 700 : 400,
-                    background: active ? '#EF476F' : '#f3f4f6',
-                    color: active ? '#fff' : '#9ca3af',
-                    opacity: greyedOut ? 0.3 : 1,
-                  }}>{m}</div>
-                )
-              })}
-            </div>
-            <div style={{fontSize:13, color: i === 1 ? '#EF476F' : '#9ca3af', fontWeight: i === 1 ? 600 : 400}}>
-              {yr.note}
-            </div>
-          </Panel>
-        ))}
-      </div>
-
-      <p style={{fontSize:14, lineHeight:1.8, color:'#6b7280', margin:'0 0 20px'}}>
-        <strong style={{color:'#1a1a1a'}}>7 out of 8 comparable months are worse year-on-year.</strong> Only
-        October showed any improvement at −2%. The most alarming shift was December, where average concentrations
-        rose 45.5%, from 17.0 to 24.8 μg/m³.
-      </p>
-
-      <Panel>
-        <ChartTitle title="Mean monthly NO₂ — 2024 vs 2025" sub="Jun–Dec (months with data in both years)" />
-        <ResponsiveContainer width="100%" height={210}>
-          <BarChart data={yoyData} margin={{top:4, right:8, left:0, bottom:0}}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" vertical={false} />
-            <XAxis dataKey="label" tick={{fill:'#9ca3af', fontSize:12}} />
-            <YAxis tick={{fill:'#9ca3af', fontSize:11}} domain={[0,32]}
-              label={{value:'μg/m³', angle:-90, position:'insideLeft', fill:'#9ca3af', fontSize:11}} />
-            <Tooltip content={<ChartTooltip />} />
-            <Bar dataKey="no2_2024" name="2024" fill="#6dbf9e" fillOpacity={0.8} radius={[3,3,0,0]} />
-            <Bar dataKey="no2_2025" name="2025" fill="#EF476F" fillOpacity={0.85} radius={[3,3,0,0]} />
-          </BarChart>
-        </ResponsiveContainer>
-        <div style={{display:'flex', gap:8, marginTop:14, flexWrap:'wrap'}}>
-          {yoyData.map((d, i) => (
-            <div key={i} style={{
-              background: d.change > 0 ? 'rgba(239,71,111,0.08)' : 'rgba(109,191,158,0.1)',
-              border: `1px solid ${d.change > 0 ? '#EF476F' : '#6dbf9e'}`,
-              borderRadius:5, padding:'4px 10px', fontSize:11,
-            }}>
-              <span style={{color:'#9ca3af'}}>{d.label} </span>
-              <span style={{color: d.change > 0 ? '#EF476F' : '#059669', fontWeight:700}}>
-                {d.change > 0 ? '+' : ''}{d.change}%
-              </span>
-            </div>
-          ))}
-        </div>
-      </Panel>
 
       <Divider />
 
       {/* ── SECTION 3 ── */}
-      <SectionLabel number="3" text="When's it worst?" />
+      <SectionLabel text="When's it worst?" />
 
       <p style={{fontSize:14, lineHeight:1.8, color:'#6b7280', margin:'0 0 24px'}}>
         NO₂ spikes twice a day — and both peaks fall directly on school opening and closing times.
-        The morning school run (<strong style={{color:'#d4900a'}}>08:30–09:04</strong>) sits inside the
-        daily morning peak. The afternoon pick-up window (<strong style={{color:'#d4900a'}}>15:10–15:45</strong>) lands
+        The morning school run (<strong style={{color:'#333333'}}>08:30–09:05</strong>) sits inside the
+        daily morning peak. The afternoon pick-up window (<strong style={{color:'#333333'}}>15:10–15:45</strong>) lands
         at the start of the day's worst sustained stretch, running through to 19:00.
         In winter, concentrations during these windows regularly exceed 30 μg/m³.
       </p>
@@ -345,7 +308,7 @@ export default function No2Trends() {
         </ResponsiveContainer>
 
         <div style={{display:'flex', gap:16, marginTop:12, fontSize:11, flexWrap:'wrap'}}>
-          <span style={{color:'#d4900a', fontWeight:600}}>▓ Drop-off 08:30–09:04 · Pick-up 15:10–15:45</span>
+          <span style={{color:'#d4900a', fontWeight:600}}>▓ Drop-off 08:30–09:05 · Pick-up 15:10–15:45</span>
           <span style={{color:'#d4900a'}}>— WHO 25 μg/m³ daily limit</span>
         </div>
       </Panel>

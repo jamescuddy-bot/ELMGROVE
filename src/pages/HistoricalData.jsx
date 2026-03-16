@@ -46,20 +46,21 @@ export default function HistoricalData() {
 
   return (
     <Layout>
-      <div className="px-5 pt-6 pb-8 bg-white">
-        <h1 className="text-[26px] font-bold text-ink mb-2">Historical data</h1>
-        <p className="text-[14px] text-gray-500 mb-5">
-          This data is from{' '}
-          <a
-            href="https://portal.earthsense.co.uk/BrightonHoveandSussexPublic/analysis"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-teal no-underline"
-          >
-            Brighton &amp; Hove's Air Quality Portal
-          </a>
-          {' '}– based on a sensor at Elm Grove
-        </p>
+      <div className="flex flex-col flex-1 bg-[#F1E5E5]">
+        <div className="px-5 pt-10 pb-8 flex flex-col gap-4">
+          <div className="flex flex-wrap gap-2">
+            {['Data', 'and', 'trends'].map(word => (
+              <span key={word} className="inline-block bg-[#E8D1D1] rounded-[7px] py-[3px] px-[9px] text-[26px] font-semibold text-[#1A1A1A] leading-[1.25]">
+                {word}
+              </span>
+            ))}
+          </div>
+          <p className="text-[20px] font-semibold text-[#635657] leading-[1.2] m-0">
+            Analysis of data from Brighton &amp; Hove's Air Quality Portal gives a detailed picture of what NO₂ levels look like at the school gate.
+          </p>
+        </div>
+
+        <div className="flex flex-col flex-1 px-5 pt-8 pb-10 bg-white rounded-t-[40px]">
 
         {/* Tabs */}
         <div className="flex bg-gray-100 rounded-[10px] p-1 gap-1 mb-5">
@@ -85,7 +86,7 @@ export default function HistoricalData() {
             ) : error || weeks.length === 0 ? (
               <div className="border-2 border-dashed border-gray-200 rounded-[12px] px-5 py-10 flex flex-col items-center gap-2">
                 <span className="text-[14px] font-semibold text-gray-300">No data available</span>
-                <span className="text-[13px] text-gray-200 text-center leading-relaxed">
+                <span className="text-[13px] text-gray-200 text-center leading-[1.5]">
                   Upload a CSV from the admin dashboard to populate this page.
                 </span>
               </div>
@@ -130,6 +131,7 @@ export default function HistoricalData() {
                 <div className="flex items-center px-1 mb-2">
                   <span className="flex-1 text-[11px] font-semibold text-gray-300 uppercase tracking-wider">Day</span>
                   <span className="w-[90px] text-center text-[11px] font-semibold text-gray-300 uppercase tracking-wider">Drop-off</span>
+                  <span className="w-2 flex-shrink-0" />
                   <span className="w-[90px] text-center text-[11px] font-semibold text-gray-300 uppercase tracking-wider">Pick-up</span>
                 </div>
 
@@ -143,6 +145,7 @@ export default function HistoricalData() {
                     <div className="w-[90px] flex justify-center">
                       <Reading val={dropoff} />
                     </div>
+                    <div className="w-2 flex-shrink-0" />
                     <div className="w-[90px] flex justify-center">
                       <Reading val={pickup} />
                     </div>
@@ -169,6 +172,7 @@ export default function HistoricalData() {
         ) : (
           <No2Trends />
         )}
+        </div>
       </div>
     </Layout>
   )

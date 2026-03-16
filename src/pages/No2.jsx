@@ -30,10 +30,14 @@ export default function No2() {
 
   return (
     <Layout>
-      <div className="px-5 pt-6 pb-10 flex flex-col gap-8 bg-white">
-        <h1 className="text-[26px] font-bold text-ink leading-snug">
-          What is NO₂ and what you can do
-        </h1>
+      <div className="flex flex-col flex-1 bg-[#F1E5E5]">
+        <div className="px-5 pt-10 pb-8">
+          <h1 className="text-[26px] font-bold text-ink leading-snug">
+            What is NO₂ and what you can do
+          </h1>
+        </div>
+
+        <div className="flex flex-col gap-8 px-5 pt-8 pb-10 bg-white rounded-t-[40px]">
 
         {/* Section 1 */}
         <section className="flex flex-col gap-3">
@@ -41,12 +45,12 @@ export default function No2() {
             <div className="w-1 h-6 bg-[#EF476F] rounded-sm flex-shrink-0" />
             <h2 className="text-[18px] font-bold text-ink">What are the impacts of NO₂?</h2>
           </div>
-          <p className="text-[15px] text-gray-500 leading-relaxed">
+          <p className="text-[15px] text-[#333333] leading-[1.5]">
             Nitrogen dioxide (NO₂) is a gas produced when fuel is burned — primarily by vehicle
             engines. At school gates, the main source is cars and vans idling at the kerb during
             drop-off and pick-up.
           </p>
-          <p className="text-[15px] text-gray-500 leading-relaxed">
+          <p className="text-[15px] text-[#333333] leading-[1.5]">
             Even at low levels, NO₂ irritates the airways. For children, whose lungs are still
             developing, regular exposure can affect long-term lung health and worsen conditions
             like asthma.
@@ -75,7 +79,7 @@ export default function No2() {
             ].map(({ title, body, source, href }) => (
               <div key={title} className="bg-gray-50 rounded-[10px] px-4 py-4 flex flex-col gap-1.5">
                 <span className="text-[14px] font-bold text-ink">{title}</span>
-                <p className="text-[14px] text-gray-500 leading-relaxed m-0">{body}</p>
+                <p className="text-[14px] text-[#333333] leading-[1.5] m-0">{body}</p>
                 <a href={href} target="_blank" rel="noopener noreferrer" className="text-[12px] text-teal no-underline font-medium">
                   {source} →
                 </a>
@@ -90,7 +94,7 @@ export default function No2() {
             <div className="w-1 h-6 bg-[#FFC43D] rounded-sm flex-shrink-0" />
             <h2 className="text-[18px] font-bold text-ink">A shared problem</h2>
           </div>
-          <p className="text-[15px] text-gray-500 leading-relaxed">
+          <p className="text-[15px] text-[#333333] leading-[1.5]">
             Driving to school isn't anything unusual. The problem is that there's nowhere safe
             to stop, so engines idle on the kerb. The effective solutions like kerbside planters
             require council action. It's worked at other schools, it can work here too.
@@ -103,7 +107,7 @@ export default function No2() {
             <div className="w-1 h-6 bg-teal rounded-sm flex-shrink-0" />
             <h2 className="text-[18px] font-bold text-ink">What can you do?</h2>
           </div>
-          <p className="text-[15px] text-gray-500 leading-relaxed">
+          <p className="text-[15px] text-[#333333] leading-[1.5]">
             Write to your local councillor asking them to fund kerb-side planters or barriers
             outside Elm Grove Primary. We've drafted a letter — edit it to make it your own,
             then copy and send.
@@ -113,13 +117,13 @@ export default function No2() {
           <div className="flex flex-col rounded-[10px] overflow-hidden border border-gray-100">
             <div className="bg-gray-100 px-4 py-3 border-b border-gray-200">
               <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider block mb-1">Subject</span>
-              <span className="text-[13px] text-gray-500">{EMAIL_SUBJECT}</span>
+              <span className="text-[13px] text-[#333333]">{EMAIL_SUBJECT}</span>
             </div>
             <textarea
               value={emailText}
               onChange={e => setEmailText(e.target.value)}
               rows={16}
-              className="bg-gray-50 px-4 py-4 text-[13px] text-gray-500 leading-relaxed resize-none border-none outline-none font-sans"
+              className="bg-gray-50 px-4 py-4 text-[13px] text-[#333333] leading-[1.5] resize-none border-none outline-none font-sans"
             />
           </div>
 
@@ -141,6 +145,7 @@ export default function No2() {
             Tap the letter to personalise it before copying
           </p>
         </section>
+        </div>
       </div>
     </Layout>
   )

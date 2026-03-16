@@ -56,8 +56,9 @@ export default async (req) => {
     weekMap[weekKey].days[dow] = reading
   }
 
-  // Build sorted weeks array (most recent first)
+  // Build sorted weeks array (most recent first), complete weeks only (must have Friday data)
   const weeks = Object.entries(weekMap)
+    .filter(([, { days }]) => !!days[5])
     .sort(([a], [b]) => b.localeCompare(a))
     .map(([, { monday, days }]) => {
       const friday = new Date(monday)
@@ -83,6 +84,7 @@ export default async (req) => {
 
       return {
         label: `Mon ${formatDate(monday)} – Fri ${formatDate(friday)}`,
+        weekStart: monday.toISOString().split('T')[0],
         summary,
         days: daysList,
       }

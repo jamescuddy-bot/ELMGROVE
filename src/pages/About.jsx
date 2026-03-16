@@ -3,13 +3,17 @@ import Layout from '../components/Layout'
 export default function About() {
   return (
     <Layout>
-      <div className="px-5 pt-6 pb-10 flex flex-col gap-0 bg-white">
-        <h1 className="text-[26px] font-bold text-ink mb-7">About</h1>
+      <div className="flex flex-col flex-1 bg-[#F1E5E5]">
+        <div className="px-5 pt-10 pb-8">
+          <h1 className="text-[26px] font-bold text-ink">About</h1>
+        </div>
+
+        <div className="flex flex-col px-5 pt-8 pb-10 bg-white rounded-t-[40px]">
 
         {/* The data */}
         <section className="flex flex-col gap-2.5 mb-6">
           <span className="text-[13px] font-semibold text-gray-300 uppercase tracking-wider">The data</span>
-          <p className="text-[15px] text-gray-500 leading-relaxed">
+          <p className="text-[15px] text-[#333333] leading-[1.5]">
             NO₂ readings are collected by an EarthSense Zephyr sensor (Device 392) located at
             Elm Grove Primary School, Brighton. The sensor is operated by Brighton &amp; Hove
             Council as part of their air quality monitoring network.
@@ -29,7 +33,7 @@ export default function About() {
         {/* Who made this */}
         <section className="flex flex-col gap-2.5 mb-6">
           <span className="text-[13px] font-semibold text-gray-300 uppercase tracking-wider">Who made this</span>
-          <p className="text-[15px] text-gray-500 leading-relaxed">
+          <p className="text-[15px] text-[#333333] leading-[1.5]">
             This site was put together by James Cuddy, a parent at Elm Grove Primary. The aim is
             to make the air quality data accessible, reduce children's exposure to harmful NO₂,
             and build the evidence case for physical intervention at the school gate.
@@ -41,7 +45,7 @@ export default function About() {
         {/* Questions */}
         <section className="flex flex-col gap-2.5 mb-10">
           <span className="text-[13px] font-semibold text-gray-300 uppercase tracking-wider">Questions</span>
-          <p className="text-[15px] text-gray-500 leading-relaxed">
+          <p className="text-[15px] text-[#333333] leading-[1.5]">
             If you have questions about the data, the project, or want to get involved, get in touch.
           </p>
           <a
@@ -60,6 +64,7 @@ export default function About() {
         <p className="text-[12px] text-gray-300">
           Data from EarthSense Zephyr Device 392 · Elm Grove Primary, Brighton
         </p>
+        </div>
       </div>
     </Layout>
   )

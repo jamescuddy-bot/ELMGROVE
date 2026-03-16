@@ -14,7 +14,7 @@ export default function Nav() {
   const { pathname } = useLocation()
 
   return (
-    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-white rounded-[14px] shadow-[0_2px_16px_rgba(0,0,0,0.08)] w-[calc(100%-32px)] max-w-[928px]">
+    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-white rounded-[14px] shadow-[0_2px_16px_rgba(0,0,0,0.08)] w-[calc(100%-32px)] max-w-[1408px]">
       {/* Header row */}
       <div className="flex items-center justify-between px-5 py-3">
         <Link to="/" className="text-[15px] font-bold text-ink no-underline">

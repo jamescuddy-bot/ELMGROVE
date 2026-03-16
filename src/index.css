@@ -9,7 +9,7 @@
 }
 
 .word-chip {
-  font-size: 28px;
+  font-size: 34px;
   font-weight: 600;
   padding: 3px 9px;
   border-radius: 7px;
@@ -18,7 +18,7 @@
 
 @media (min-width: 1024px) {
   .word-chip {
-    font-size: 56px;
+    font-size: 67px;
     padding: 6px 18px;
     border-radius: 14px;
   }
