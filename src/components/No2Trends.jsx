@@ -185,25 +185,8 @@ export default function No2Trends() {
         The WHO set its 25 μg/m³ daily limit because prolonged exposure above this level is linked to
         respiratory harm in children — reduced lung development, increased asthma risk, and higher susceptibility
         to infection. At Elm Grove, this is not an occasional breach. It is the winter norm. In January 2026 alone,
-        the daily average exceeded the WHO limit on 27 out of 31 days.
+        the daily average exceeded the WHO limit on 27 out of 31 days. In 2025, the levels were 117% above the annual NO₂ WHO guideline limit of 10 μg/m³.
       </p>
-
-      <div style={{display:'flex', flexDirection:'column', gap:24, marginBottom:8}}>
-        {stats2026 && (
-          <StatCallout
-            value={`${stats2026.exceeded} of ${stats2026.total}`}
-            label="school days in 2026 above WHO 25 μg/m³ daily limit"
-            accent="#EF476F"
-          />
-        )}
-        {annualPctOver !== null && (
-          <StatCallout
-            value={`${annualPctOver}%`}
-            label="above the WHO annual NO₂ limit of 10 μg/m³ (2025 mean)"
-            accent="#EF476F"
-          />
-        )}
-      </div>
 
       <Divider />
 

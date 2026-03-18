@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Layout from '../components/Layout'
 
 const EMAIL_SUBJECT = 'Air quality outside Elm Grove Primary School — request for action'
-const EMAIL_BODY = `Dear [Councillor name],
+const EMAIL_BODY = `Dear Tim,
 
 I'm a parent at Elm Grove Primary School in Brighton. I'm writing to ask for your support in addressing dangerous levels of nitrogen dioxide (NO₂) outside the school gate during drop-off and pick-up times.
 
@@ -31,7 +31,7 @@ export default function No2() {
   const [copied, setCopied] = useState(false)
 
   function handleCopy() {
-    const full = `Subject: ${EMAIL_SUBJECT}\n\n${emailText}`
+    const full = `To: Tim.Rowkins@brighton-hove.gov.uk\nSubject: ${EMAIL_SUBJECT}\n\n${emailText}`
     navigator.clipboard.writeText(full).then(() => {
       setCopied(true)
       setTimeout(() => setCopied(false), 2500)
@@ -49,9 +49,10 @@ export default function No2() {
               </span>
             ))}
           </div>
+          <p className="text-[20px] desktop:text-[28px] font-semibold text-[#EA3457] leading-[1.2] m-0">Although it's invisible, its impact is real.</p>
         </div>
 
-        <div className="flex flex-col gap-8 bg-white rounded-t-[40px] w-full max-w-[1168px] mx-auto px-5 desktop:px-16 pt-8 pb-10">
+        <div className="flex flex-col gap-12 bg-white rounded-t-[40px] w-full max-w-[1168px] mx-auto px-5 desktop:px-16 pt-8 pb-10">
 
         {/* Section 1 */}
         <section className="flex flex-col gap-3">
@@ -67,7 +68,7 @@ export default function No2() {
             like asthma.
           </p>
 
-          <div className="flex flex-col gap-3 mt-1">
+          <div className="flex flex-col desktop:flex-row gap-3 mt-8">
             {[
               {
                 title: 'Lungs don\'t recover',
@@ -88,9 +89,9 @@ export default function No2() {
                 href: 'https://www.eea.europa.eu/publications/air-pollution-and-childrens-health',
               },
             ].map(({ title, body, source, href }) => (
-              <div key={title} className="bg-gray-50 rounded-[10px] px-4 py-4 flex flex-col gap-1.5">
-                <span className="text-[14px] font-semibold text-ink">{title}</span>
-                <p className="text-[14px] text-[#333333] leading-[1.5] m-0">{body}</p>
+              <div key={title} className="bg-gray-50 rounded-[8px] p-4 flex flex-col gap-1.5 desktop:flex-1">
+                <span className="text-[20px] font-semibold text-ink">{title}</span>
+                <p className="text-[14px] text-[#333333] leading-[1.5] m-0 max-w-none">{body}</p>
                 <a href={href} target="_blank" rel="noopener noreferrer" className="text-[12px] text-teal no-underline font-medium">
                   {source} →
                 </a>
@@ -118,8 +119,19 @@ export default function No2() {
             then copy and send.
           </p>
 
+          <p className="text-[12px] text-gray-400 flex items-center gap-1.5 mt-8">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M8 2l1.5 1.5L3 10H1.5V8.5L8 2z" stroke="#9ca3af" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Tap the letter to personalise it before copying
+          </p>
+
           {/* Email tool */}
           <div className="flex flex-col rounded-[10px] overflow-hidden border border-gray-100">
+            <div className="bg-gray-100 px-4 py-3 border-b border-gray-200">
+              <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider block mb-1">To</span>
+              <span className="text-[13px] text-[#333333]">Tim.Rowkins@brighton-hove.gov.uk</span>
+            </div>
             <div className="bg-gray-100 px-4 py-3 border-b border-gray-200">
               <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider block mb-1">Subject</span>
               <span className="text-[13px] text-[#333333]">{EMAIL_SUBJECT}</span>
@@ -143,12 +155,7 @@ export default function No2() {
             {copied ? 'Copied!' : 'Copy to clipboard'}
           </button>
 
-          <p className="text-[12px] text-gray-300 flex items-center gap-1.5">
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M8 2l1.5 1.5L3 10H1.5V8.5L8 2z" stroke="#ccc" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            Tap the letter to personalise it before copying
-          </p>
+          <div className="h-[100px]" />
         </section>
         </div>
       </div>

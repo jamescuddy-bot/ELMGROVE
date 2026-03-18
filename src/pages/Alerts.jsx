@@ -125,14 +125,14 @@ export default function Alerts() {
             ))}
           </div>
           <div className="flex flex-col gap-2">
-            <span className="self-start bg-[#1F8A92] text-white text-[13px] font-semibold px-3 py-1 rounded-full">Coming soon</span>
+            <span className="self-start bg-[#FFE599] text-[#B45309] text-[13px] font-semibold px-3 py-1 rounded-full">Coming soon</span>
             <p className="text-[20px] desktop:text-[28px] font-semibold text-[#1F8A92] leading-[1.2] m-0">
               Get a free text message when NO₂ levels at Elm Grove are forecast to be high. Alerts are sent before drop-off so you have time to act.
             </p>
           </div>
         </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col bg-white rounded-t-[40px] w-full max-w-[1168px] mx-auto px-5 desktop:px-16 pt-8 pb-10">
+      <form onSubmit={handleSubmit} className="flex flex-col bg-white rounded-t-[40px] w-full max-w-[1168px] mx-auto px-5 desktop:px-16 pt-8 pb-10 flex-1">
         <div className="flex flex-col gap-6 desktop:max-w-[50%]">
         {/* Phone */}
         <div className="flex flex-col gap-1.5">

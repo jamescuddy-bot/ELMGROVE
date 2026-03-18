@@ -18,7 +18,7 @@ export default function Nav() {
       {/* Header row */}
       <div className="flex items-center justify-between px-5 py-3">
         <Link to="/" className="text-[15px] font-bold text-ink no-underline">
-          Elm Grove air quality
+          Elm Grove Air Quality
         </Link>
 
         {/* Desktop inline links */}
