@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Layout from '../components/Layout'
+import illoData from '../assets/illo-data.svg'
+import illoAlerts from '../assets/illo-alerts.svg'
+import illoNo2 from '../assets/illo-no2.svg'
 
 const CHIP_INTERVAL = 60
 const HOLD_DURATION = 2500
@@ -144,7 +147,7 @@ export default function Home() {
   return (
     <Layout>
       <div className="flex flex-col flex-1 bg-[#F1E5E5]">
-        <div className="flex-1 flex flex-col px-5 pt-10 pb-2 min-h-[calc((100vh-72px)*0.8)] max-h-[60vh] desktop:justify-center">
+        <div className="w-full max-w-[1168px] mx-auto flex-1 flex flex-col px-5 desktop:px-16 pt-10 pb-2 min-h-[calc((100vh-72px)*0.8)] max-h-[60vh] desktop:justify-center">
           <span className="text-[12px] font-semibold tracking-widest uppercase mb-5" style={{color:'#5A5A5A'}}>
             {s.label}
           </span>
@@ -162,7 +165,7 @@ export default function Home() {
                   background: chip.highlight ? '#FF9C9C' : '#E8D1D1',
                 }}
               >
-                {chip.text}
+                {chip.text === 'NO₂' ? <>NO<span style={{fontSize:'0.6em',position:'relative',top:'0.1em'}}>2</span></> : chip.text}
               </span>
             ))}
           </div>
@@ -183,23 +186,26 @@ export default function Home() {
         </div>
 
 
-        <div className="flex flex-col desktop:flex-row gap-6 desktop:gap-10 px-5 desktop:px-16 pt-8 desktop:pt-16 pb-12 desktop:pb-16 bg-white rounded-t-[40px]">
-          <Link to="/data" className="no-underline block p-7 rounded-tl-3xl rounded-tr-[32px] rounded-bl-[30px] rounded-br-[32px] flex-1 bg-[#F1DBC4] min-h-[360px] flex flex-col">
+        <div className="bg-white rounded-t-[40px] w-full max-w-[1168px] mx-auto flex flex-col desktop:flex-row gap-6 desktop:gap-10 px-5 desktop:px-16 pt-8 desktop:pt-16 pb-12 desktop:pb-16">
+          <Link to="/data" className="no-underline block p-7 rounded-tl-3xl rounded-tr-[32px] rounded-bl-[30px] rounded-br-[32px] flex-1 bg-[#FFE9D2] min-h-[360px] flex flex-col relative overflow-hidden">
             <h2 className="text-[28px] font-semibold text-[#EC4612] leading-tight mb-2">Data and trends</h2>
-            <p className="text-[20px] font-medium text-[#EC4612] opacity-80">What NO₂ levels look like at the school gate</p>
-            <div className="mt-auto rounded-full bg-[#EC4612] text-white text-[15px] font-bold text-center py-3.5">See data and trends</div>
+            <p className="text-[20px] font-medium text-[#EC4612] opacity-80 leading-[1.3]">What NO₂ levels look like at the school gate</p>
+            <img src={illoData} alt="" className="absolute bottom-[calc(28px+24px)] -right-[10px] w-4/5 object-contain object-bottom" />
+            <div className="mt-auto relative z-10 rounded-full bg-[#EC4612] text-white text-[15px] font-bold text-center py-3.5">See data and trends</div>
           </Link>
 
-          <Link to="/alerts" className="no-underline block p-7 rounded-tl-3xl rounded-tr-[32px] rounded-bl-[30px] rounded-br-[32px] flex-1 bg-[#8BF0F8]/35 min-h-[360px] flex flex-col">
+          <Link to="/alerts" className="no-underline block p-7 rounded-tl-3xl rounded-tr-[32px] rounded-bl-[30px] rounded-br-[32px] flex-1 bg-[#8BF0F8]/35 min-h-[360px] flex flex-col relative overflow-hidden">
             <h2 className="text-[28px] font-semibold text-[#1F8A92] leading-tight mb-2">NO₂ alerts</h2>
-            <p className="text-[20px] font-medium text-[#1F8A92] opacity-80">Set an alert for when levels are forecast to be very high at drop off.</p>
-            <div className="mt-auto rounded-full bg-[#1F8A92] text-white text-[15px] font-bold text-center py-3.5">Get an early alert</div>
+            <p className="text-[20px] font-medium text-[#1F8A92] opacity-80 leading-[1.3]">Set an alert for when levels are forecast to be very high at drop off.</p>
+            <img src={illoAlerts} alt="" className="absolute bottom-[calc(28px+24px)] -right-[10px] w-4/5 object-contain object-bottom" />
+            <div className="mt-auto relative z-10 rounded-full bg-[#1F8A92] text-white text-[15px] font-bold text-center py-3.5">Get an early alert</div>
           </Link>
 
-          <Link to="/no2" className="no-underline block p-7 rounded-tl-3xl rounded-tr-[32px] rounded-bl-[30px] rounded-br-[32px] flex-1 bg-[#FDD0CF] min-h-[360px] flex flex-col">
-            <h2 className="text-[28px] font-semibold text-[#EC4612] leading-tight mb-2">What is NO₂?</h2>
-            <p className="text-[20px] font-medium text-[#EC4612] opacity-80">What is it and what we can do about it.</p>
-            <div className="mt-auto rounded-full bg-[#EC4612] text-white text-[15px] font-bold text-center py-3.5">Find out more</div>
+          <Link to="/no2" className="no-underline block p-7 rounded-tl-3xl rounded-tr-[32px] rounded-bl-[30px] rounded-br-[32px] flex-1 bg-[#FDD0CF] min-h-[360px] flex flex-col relative overflow-hidden">
+            <h2 className="text-[28px] font-semibold text-[#EA3457] leading-tight mb-2">What is NO₂?</h2>
+            <p className="text-[20px] font-medium text-[#EA3457] opacity-80 leading-[1.3]">What is it and what we can do about it.</p>
+            <img src={illoNo2} alt="" className="absolute bottom-[91px] -right-[10px] w-1/2 object-contain object-bottom" />
+            <div className="mt-auto relative z-10 rounded-full bg-[#EA3457] text-white text-[15px] font-bold text-center py-3.5">Find out more</div>
           </Link>
         </div>
 

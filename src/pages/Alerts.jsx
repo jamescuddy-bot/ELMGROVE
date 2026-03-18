@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Layout from '../components/Layout'
 
 function isValidPhone(raw) {
@@ -11,8 +11,18 @@ function isValidPhone(raw) {
   )
 }
 
+const HEADER_CHIPS = ['Early', 'NO₂', 'alerts']
+
 export default function Alerts() {
   const [phone, setPhone] = useState('')
+  const [chipIndex, setChipIndex] = useState(-1)
+
+  useEffect(() => {
+    if (chipIndex < HEADER_CHIPS.length - 1) {
+      const t = setTimeout(() => setChipIndex(i => i + 1), 60)
+      return () => clearTimeout(t)
+    }
+  }, [chipIndex])
   const [phoneConfirmed, setPhoneConfirmed] = useState(false)
   const [phoneError, setPhoneError] = useState(false)
   const [level, setLevel] = useState(null)
@@ -106,20 +116,24 @@ export default function Alerts() {
   return (
     <Layout bgColor="#D6FAFD">
       <div className="flex flex-col flex-1 bg-[#D6FAFD]">
-        <div className="px-5 pt-10 pb-8 flex flex-col gap-4">
+        <div className="w-full max-w-[1168px] mx-auto px-5 desktop:px-20 pt-10 pb-8 desktop:pt-20 desktop:pb-20 flex flex-col gap-4 desktop:gap-8">
           <div className="flex flex-wrap gap-2">
-            {['Early', 'NO₂', 'alerts'].map(word => (
-              <span key={word} className="inline-block bg-[#1F8A92] rounded-[7px] py-[3px] px-[9px] text-[26px] font-semibold text-white leading-[1.25]">
-                {word}
+            {HEADER_CHIPS.map((word, i) => (
+              <span key={word} className="inline-block bg-[#1F8A92] rounded-[7px] py-[3px] px-[9px] text-[26px] desktop:text-[52px] font-semibold text-white leading-[1.25]" style={{opacity: i <= chipIndex ? 1 : 0, transform: i <= chipIndex ? 'scale(1)' : 'scale(0.88)', transition: 'opacity 100ms ease, transform 100ms ease'}}>
+                {word === 'NO₂' ? <>NO<span style={{fontSize:'0.6em',position:'relative',top:'0.1em'}}>2</span></> : word}
               </span>
             ))}
           </div>
-          <p className="text-[20px] font-semibold text-[#1F8A92] leading-[1.2] m-0">
-            Get a free text message when NO₂ levels at Elm Grove are forecast to be high. Alerts are sent before drop-off so you have time to act.
-          </p>
+          <div className="flex flex-col gap-2">
+            <span className="self-start bg-[#1F8A92] text-white text-[13px] font-semibold px-3 py-1 rounded-full">Coming soon</span>
+            <p className="text-[20px] desktop:text-[28px] font-semibold text-[#1F8A92] leading-[1.2] m-0">
+              Get a free text message when NO₂ levels at Elm Grove are forecast to be high. Alerts are sent before drop-off so you have time to act.
+            </p>
+          </div>
         </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-6 px-5 pt-8 pb-10 bg-white rounded-t-[40px]">
+      <form onSubmit={handleSubmit} className="flex flex-col bg-white rounded-t-[40px] w-full max-w-[1168px] mx-auto px-5 desktop:px-16 pt-8 pb-10">
+        <div className="flex flex-col gap-6 desktop:max-w-[50%]">
         {/* Phone */}
         <div className="flex flex-col gap-1.5">
           <label className="text-[13px] font-semibold text-ink">Mobile number</label>
@@ -223,7 +237,7 @@ export default function Alerts() {
         {/* Submit */}
         <button
           type="submit"
-          disabled={!phoneConfirmed || !level || !timing || submitting}
+          disabled
           className="bg-teal text-white text-[16px] font-bold py-4 rounded-[10px] border-none cursor-pointer disabled:opacity-40"
         >
           {submitting ? 'Signing you up…' : 'Sign me up'}
@@ -257,6 +271,7 @@ export default function Alerts() {
               </div>
             </div>
           )}
+        </div>
         </div>
       </form>
       </div>

@@ -22,8 +22,18 @@ function Reading({ val }) {
   )
 }
 
+const HEADER_CHIPS = ['Data', 'and', 'trends']
+
 export default function HistoricalData() {
   const [tab, setTab] = useState('week')
+  const [chipIndex, setChipIndex] = useState(-1)
+
+  useEffect(() => {
+    if (chipIndex < HEADER_CHIPS.length - 1) {
+      const t = setTimeout(() => setChipIndex(i => i + 1), 60)
+      return () => clearTimeout(t)
+    }
+  }, [chipIndex])
   const [weeks, setWeeks] = useState([])
   const [weekIndex, setWeekIndex] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -45,22 +55,22 @@ export default function HistoricalData() {
   const week = weeks[weekIndex]
 
   return (
-    <Layout bgColor="#F1DBC4">
-      <div className="flex flex-col flex-1 bg-[#F1DBC4]">
-        <div className="px-5 pt-10 pb-8 flex flex-col gap-4">
+    <Layout bgColor="#FFE9D2">
+      <div className="flex flex-col flex-1 bg-[#FFE9D2]">
+        <div className="w-full max-w-[1168px] mx-auto px-5 desktop:px-20 pt-10 pb-8 desktop:pt-20 desktop:pb-20 flex flex-col gap-4 desktop:gap-8">
           <div className="flex flex-wrap gap-2">
-            {['Data', 'and', 'trends'].map(word => (
-              <span key={word} className="inline-block bg-[#EC4612] rounded-[7px] py-[3px] px-[9px] text-[26px] font-semibold text-white leading-[1.25]">
+            {HEADER_CHIPS.map((word, i) => (
+              <span key={word} className="inline-block bg-[#EC4612] rounded-[7px] py-[3px] px-[9px] text-[26px] desktop:text-[52px] font-semibold text-white leading-[1.25]" style={{opacity: i <= chipIndex ? 1 : 0, transform: i <= chipIndex ? 'scale(1)' : 'scale(0.88)', transition: 'opacity 100ms ease, transform 100ms ease'}}>
                 {word}
               </span>
             ))}
           </div>
-          <p className="text-[20px] font-semibold text-[#EC4612] leading-[1.2] m-0">
+          <p className="text-[20px] desktop:text-[28px] font-semibold text-[#EC4612] leading-[1.2] m-0">
             Analysis of data from Brighton &amp; Hove's Air Quality Portal gives a detailed picture of what NO₂ levels look like at the school gate.
           </p>
         </div>
 
-        <div className="flex flex-col flex-1 px-5 pt-8 pb-10 bg-white rounded-t-[40px]">
+        <div className="flex flex-col flex-1 bg-white rounded-t-[40px] w-full max-w-[1168px] mx-auto px-5 desktop:px-16 pt-8 pb-10">
 
         {/* Tabs */}
         <div className="flex bg-gray-100 rounded-full p-1 gap-1 mb-5">

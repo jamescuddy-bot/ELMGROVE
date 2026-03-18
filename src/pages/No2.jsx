@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Layout from '../components/Layout'
 
 const EMAIL_SUBJECT = 'Air quality outside Elm Grove Primary School — request for action'
@@ -16,8 +16,18 @@ Thank you for your time.
 
 [Your name]`
 
+const HEADER_CHIPS = ['What', 'is', 'NO₂', 'and', 'what', 'you', 'can', 'do']
+
 export default function No2() {
   const [emailText, setEmailText] = useState(EMAIL_BODY)
+  const [chipIndex, setChipIndex] = useState(-1)
+
+  useEffect(() => {
+    if (chipIndex < HEADER_CHIPS.length - 1) {
+      const t = setTimeout(() => setChipIndex(i => i + 1), 60)
+      return () => clearTimeout(t)
+    }
+  }, [chipIndex])
   const [copied, setCopied] = useState(false)
 
   function handleCopy() {
@@ -31,17 +41,17 @@ export default function No2() {
   return (
     <Layout bgColor="#FDD0CF">
       <div className="flex flex-col flex-1 bg-[#FDD0CF]">
-        <div className="px-5 pt-10 pb-8 flex flex-col gap-4">
+        <div className="w-full max-w-[1168px] mx-auto px-5 desktop:px-20 pt-10 pb-8 desktop:pt-20 desktop:pb-20 flex flex-col gap-4 desktop:gap-8">
           <div className="flex flex-wrap gap-2">
-            {['What', 'is', 'NO₂', 'and', 'what', 'you', 'can', 'do'].map(word => (
-              <span key={word} className="inline-block bg-[#EC4612] rounded-[7px] py-[3px] px-[9px] text-[26px] font-semibold text-white leading-[1.25]">
-                {word}
+            {HEADER_CHIPS.map((word, i) => (
+              <span key={word} className="inline-block bg-[#EA3457] rounded-[7px] py-[3px] px-[9px] text-[26px] desktop:text-[52px] font-semibold text-white leading-[1.25]" style={{opacity: i <= chipIndex ? 1 : 0, transform: i <= chipIndex ? 'scale(1)' : 'scale(0.88)', transition: 'opacity 100ms ease, transform 100ms ease'}}>
+                {word === 'NO₂' ? <>NO<span style={{fontSize:'0.6em',position:'relative',top:'0.1em'}}>2</span></> : word}
               </span>
             ))}
           </div>
         </div>
 
-        <div className="flex flex-col gap-8 px-5 pt-8 pb-10 bg-white rounded-t-[40px]">
+        <div className="flex flex-col gap-8 bg-white rounded-t-[40px] w-full max-w-[1168px] mx-auto px-5 desktop:px-16 pt-8 pb-10">
 
         {/* Section 1 */}
         <section className="flex flex-col gap-3">

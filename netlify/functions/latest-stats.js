@@ -97,6 +97,48 @@ export default async (req) => {
     ? Math.round((pickupAvg - WHO_LIMIT) / WHO_LIMIT * 100)
     : null
 
+  // If no exceedances in the most recent week, fall back to the previous complete month
+  if (daysExceeded === 0) {
+    const refDate = new Date(referenceDate)
+    const prevMonth = refDate.getMonth() === 0 ? 11 : refDate.getMonth() - 1
+    const prevMonthYear = refDate.getMonth() === 0 ? refDate.getFullYear() - 1 : refDate.getFullYear()
+
+    const monthReadings = readings.filter(r => {
+      const [y, m] = normalise(r.date).split('-').map(Number)
+      return y === prevMonthYear && m - 1 === prevMonth
+    })
+
+    if (monthReadings.length > 0) {
+      const mDropoff = monthReadings.map(r => r.dropoff).filter(v => v !== null)
+      const mPickup  = monthReadings.map(r => r.pickup).filter(v => v !== null)
+      const mDropoffAvg = avg(mDropoff)
+      const mPickupAvg  = avg(mPickup)
+      const mDaysExceeded = monthReadings.filter(r => r.dropoff > WHO_LIMIT || r.pickup > WHO_LIMIT).length
+      const mTotalDays    = monthReadings.length
+      const mDropoffPctOver = mDropoffAvg !== null && mDropoffAvg > WHO_LIMIT
+        ? Math.round((mDropoffAvg - WHO_LIMIT) / WHO_LIMIT * 100) : null
+      const mPickupPctOver = mPickupAvg !== null && mPickupAvg > WHO_LIMIT
+        ? Math.round((mPickupAvg - WHO_LIMIT) / WHO_LIMIT * 100) : null
+
+      const monthNames = ['January','February','March','April','May','June',
+                          'July','August','September','October','November','December']
+      const mLabel = `${monthNames[prevMonth]} ${prevMonthYear}`
+
+      return new Response(
+        JSON.stringify({
+          label: mLabel,
+          dropoffAvg: mDropoffAvg,
+          pickupAvg: mPickupAvg,
+          daysExceeded: mDaysExceeded,
+          totalDays: mTotalDays,
+          dropoffPctOver: mDropoffPctOver,
+          pickupPctOver: mPickupPctOver,
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      )
+    }
+  }
+
   const label = `Mon ${formatDateLabel(monday)} – Fri ${formatDateLabel(friday)}`
 
   return new Response(
