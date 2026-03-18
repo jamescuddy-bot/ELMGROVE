@@ -12,13 +12,15 @@ const WHO_LIMIT = 25
 
 function buildStatements(data) {
   const { label, dropoffAvg, pickupAvg, daysExceeded, totalDays, dropoffPctOver, pickupPctOver } = data
+  const isMonth = !label.includes('–')
+  const period = isMonth ? 'Last month' : 'Last week'
   const statements = []
 
   if (dropoffPctOver > 0) {
     statements.push({
       label: `Drop-off · ${label}`,
       segments: [
-        { text: 'Last week during drop-off, NO₂ levels reached', highlight: false },
+        { text: `${period} during drop-off, NO₂ levels reached`, highlight: false },
         { text: `${dropoffPctOver}% over`, highlight: true },
         { text: 'the safe threshold.', highlight: false },
       ],
@@ -31,7 +33,7 @@ function buildStatements(data) {
     statements.push({
       label: `School mornings · ${label}`,
       segments: [
-        { text: 'Last week NO₂ exceeded safe limits', highlight: false },
+        { text: `${period} NO₂ exceeded safe limits`, highlight: false },
         { text: `${daysExceeded} out of ${totalDays}`, highlight: true },
         { text: 'days.', highlight: false },
       ],
@@ -44,7 +46,7 @@ function buildStatements(data) {
     statements.push({
       label: `Pick-up · ${label}`,
       segments: [
-        { text: 'Last week during pick-up, NO₂ levels reached', highlight: false },
+        { text: `${period} during pick-up, NO₂ levels reached`, highlight: false },
         { text: `${pickupPctOver}% over`, highlight: true },
         { text: 'the safe threshold.', highlight: false },
       ],
