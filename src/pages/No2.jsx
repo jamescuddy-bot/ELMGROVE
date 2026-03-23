@@ -4,13 +4,13 @@ import Layout from '../components/Layout'
 const EMAIL_SUBJECT = 'Air quality outside Elm Grove Primary School — request for action'
 const EMAIL_BODY = `Dear Tim,
 
-I'm a parent at Elm Grove Primary School in Brighton. I'm writing to ask for your support in addressing dangerous levels of nitrogen dioxide (NO₂) outside the school gate during drop-off and pick-up times.
+I'm a parent at Elm Grove Primary and I'm writing to ask for your support on air quality outside the school.
 
-Data from the EarthSense Zephyr air quality sensor at Elm Grove shows that NO₂ levels regularly exceed the WHO 24-hour guideline of 25 μg/m³ during school run periods. On some mornings, levels are more than double this limit. The primary cause is vehicles idling on the kerb outside the school.
+EarthSense Zephyr data shows NO₂ during drop-off averaging 36.8 µg/m³ — above the 36 µg/m³ threshold your council's own Annual Status Report identifies as the level needed to be confident the legal limit is being met. This is a road problem, not a school gate problem. Elm Grove carries through-traffic, and the pedestrian crossing creates a daily queue while children arrive.
 
-I'm asking the council to consider installing physical planters or barriers along the kerb outside Elm Grove Primary to prevent engine idling and pavement parking. This is a low-cost, proven intervention that other councils have used to protect children at school gates.
+I'd ask the council to consider two actions: kerbside planters to separate the pavement from moving traffic, and extending the Air Quality Management Area to include Elm Grove, which would place a legal obligation on the council to act.
 
-The data underpinning this is collected by EarthSense Zephyr sensors already operated by Brighton & Hove Council. I'd welcome the chance to discuss what it shows and what action might be possible.
+The data comes from sensors already operated by Brighton & Hove Council. I'd welcome the chance to discuss it.
 
 Thank you for your time.
 
@@ -77,10 +77,10 @@ export default function No2() {
                 href: 'https://www.nejm.org/doi/full/10.1056/NEJMoa040610',
               },
               {
-                title: 'It likely causes asthma',
-                body: 'Scientific evidence suggests NO₂ exposure doesn\'t just worsen asthma in children, it can cause it.',
-                source: 'American Lung Association, 2022',
-                href: 'https://www.lung.org/clean-air/outdoors/what-makes-air-unhealthy/nitrogen-dioxide',
+                title: 'Damages Growing Lungs',
+                body: 'Exposure during childhood is linked to reduced lung development and a higher risk of asthma in children who live near busy roads. The damage can be gradual and may not become fully apparent for years.',
+                source: 'Public Health England',
+                href: 'https://www.gov.uk/government/publications/health-matters-air-pollution/health-matters-air-pollution',
               },
               {
                 title: 'Children get a bigger dose',
@@ -104,9 +104,10 @@ export default function No2() {
         <section className="flex flex-col gap-3">
           <h2 className="text-[24px] font-semibold text-[#333333]">A shared problem</h2>
           <p className="text-[15px] text-[#333333] leading-[1.5]">
-            Driving to school isn't anything unusual. The problem is that there's nowhere safe
-            to stop, so engines idle on the kerb. The effective solutions like kerbside planters
-            require council action. It's worked at other schools, it can work here too.
+            The school sits on one of Brighton's main routes in and out of the city. Traffic queues at the pedestrian crossing every morning while children arrive. The pollution is a product of the road. That requires a council solution, not an individual one.
+          </p>
+          <p className="text-[15px] text-[#333333] leading-[1.5]">
+            Kerbside planters create physical separation between the pavement and moving traffic, reducing both exposure and the opportunity to idle at the kerb. They've worked at other schools - but this needs the council to act.
           </p>
         </section>
 
@@ -114,9 +115,16 @@ export default function No2() {
         <section className="flex flex-col gap-3">
           <h2 className="text-[24px] font-semibold text-[#333333]">What can you do?</h2>
           <p className="text-[15px] text-[#333333] leading-[1.5]">
-            Write to your local councillor asking them to fund kerb-side planters or barriers
-            outside Elm Grove Primary. We've drafted a letter, edit it to make it your own,
-            then copy and send.
+            Four months of NO₂ readings show levels exceeding WHO guidelines on nearly three in four school mornings. That's not an edge case it's the norm.
+          </p>
+          <p className="text-[15px] text-[#333333] leading-[1.5]">
+            Kerbside planters create physical separation between the pavement and moving traffic, reducing both exposure and the opportunity to idle at the kerb. They've worked at other schools. They need the council to act.
+          </p>
+          <p className="text-[15px] text-[#333333] leading-[1.5]">
+            A longer-term option is extending Brighton &amp; Hove's Air Quality Management Area to include Elm Grove. An AQMA is a legally declared zone where pollution exceeds, or is likely to exceed, national limits. Once declared, the council has a legal obligation to publish an action plan and work toward improvement. Currently the AQMA covers Lewes Road at the bottom of the hill, not the school. Our data suggests the school itself warrants the same level of attention.
+          </p>
+          <p className="text-[15px] text-[#333333] leading-[1.5]">
+            Both require council action. The evidence to support it is already here.
           </p>
 
           <p className="text-[12px] text-gray-400 flex items-center gap-1.5 mt-8">
@@ -146,7 +154,7 @@ export default function No2() {
 
           <button
             onClick={handleCopy}
-            className="flex items-center justify-center gap-2.5 bg-teal text-white text-[16px] font-bold py-4 rounded-[10px] border-none cursor-pointer"
+            className="flex items-center justify-center gap-2.5 bg-teal text-white text-[16px] font-bold py-4 rounded-full border-none cursor-pointer"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <rect x="5" y="5" width="9" height="9" rx="2" stroke="white" strokeWidth="1.5" />

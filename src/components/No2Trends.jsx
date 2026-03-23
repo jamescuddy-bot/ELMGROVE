@@ -173,6 +173,7 @@ export default function No2Trends() {
     <div style={{fontFamily:"'Inclusive Sans', sans-serif", color:'#1a1a1a'}}>
 
       {/* Intro */}
+      <h2 style={{fontSize:24, fontWeight:600, color:'#333333', margin:'0 0 10px 0', paddingTop:20}}>What's this based on?</h2>
       <p style={{fontSize:14, lineHeight:1.8, color:'#333333', margin:'0 0 28px'}}>
         Analysis of 59,242 sensor readings from June 2024 to March 2026.
         The WHO safe limit for NO₂ is 25 μg/m³ as a 24-hour average.

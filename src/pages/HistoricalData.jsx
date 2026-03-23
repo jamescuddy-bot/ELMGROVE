@@ -103,7 +103,7 @@ export default function HistoricalData() {
             ) : (
               <>
                 {/* Week navigator */}
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-4 py-4">
                   <button
                     onClick={() => setWeekIndex(i => i + 1)}
                     disabled={weekIndex >= weeks.length - 1}

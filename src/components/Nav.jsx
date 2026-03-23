@@ -14,7 +14,7 @@ export default function Nav() {
   const { pathname } = useLocation()
 
   return (
-    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-white rounded-[14px] shadow-[0_2px_16px_rgba(0,0,0,0.08)] w-[calc(100%-32px)] max-w-[1168px]">
+    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-white rounded-[24px] shadow-[0_2px_16px_rgba(0,0,0,0.08)] w-[calc(100%-32px)] max-w-[1168px] overflow-hidden">
       {/* Header row */}
       <div className="flex items-center justify-between px-5 py-3">
         <Link to="/" className="text-[15px] font-bold text-ink no-underline">
@@ -56,8 +56,11 @@ export default function Nav() {
       </div>
 
       {/* Expanded menu */}
-      {open && (
-        <ul className="desktop:hidden list-none p-0 m-0 px-5 pb-3 flex flex-col border-t border-gray-100">
+      <div
+        className="desktop:hidden overflow-hidden transition-[max-height] duration-300 ease-in-out"
+        style={{ maxHeight: open ? '400px' : '0px' }}
+      >
+        <ul className="list-none p-0 m-0 px-5 pb-3 flex flex-col border-t border-gray-100">
           {links.map(({ to, label }) => (
             <li key={to}>
               <Link
@@ -72,7 +75,7 @@ export default function Nav() {
             </li>
           ))}
         </ul>
-      )}
+      </div>
     </nav>
   )
 }

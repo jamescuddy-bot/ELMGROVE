@@ -150,8 +150,8 @@ export default function Home() {
   return (
     <Layout>
       <div className="flex flex-col flex-1 bg-[#F1E5E5]">
-        <div className="w-full max-w-[1168px] mx-auto flex-1 flex flex-col px-5 desktop:px-16 pt-10 pb-2 min-h-[calc((100vh-72px)*0.8)] max-h-[60vh] desktop:justify-center">
-          <span className="text-[12px] font-semibold tracking-widest uppercase mb-5" style={{color:'#5A5A5A'}}>
+        <div className="w-full max-w-[1168px] mx-auto flex-1 flex flex-col px-5 desktop:px-16 pt-10 pb-10 min-h-[calc((100vh-72px)*0.8)] desktop:justify-center">
+          <span className="text-[14px] font-semibold mb-5" style={{color:'#5A5A5A'}}>
             {s.label}
           </span>
 
