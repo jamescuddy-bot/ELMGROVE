@@ -90,6 +90,12 @@ export default function Home() {
   const [hoveredChip, setHoveredChip] = useState(null)
 
   useEffect(() => {
+    const prev = document.body.style.background
+    document.body.style.background = '#99E2FF'
+    return () => { document.body.style.background = prev }
+  }, [])
+
+  useEffect(() => {
     fetch('/.netlify/functions/latest-stats')
       .then(r => r.json())
       .then(data => {
@@ -149,7 +155,7 @@ export default function Home() {
 
   return (
     <Layout>
-      <div className="flex flex-col flex-1 bg-[#F1E5E5]">
+      <div className="flex flex-col flex-1 bg-[#99E2FF]">
         <div className="w-full max-w-[1168px] mx-auto flex-1 flex flex-col px-5 desktop:px-16 pt-10 pb-10 min-h-[calc((100vh-72px)*0.8)] desktop:justify-center">
           <span className="text-[14px] font-semibold mb-5" style={{color:'#5A5A5A'}}>
             {s.label}
@@ -159,13 +165,13 @@ export default function Home() {
             {chips.map((chip, i) => (
               <span
                 key={`${stmtIndex}-${i}`}
-                className={`word-chip text-ink desktop:cursor-pointer ${chip.highlight ? 'bg-[#FF9C9C]' : 'bg-[#E8D1D1]'}`}
+                className={`word-chip text-ink desktop:cursor-pointer ${chip.highlight ? 'bg-[#FF9C9C]' : 'bg-[rgba(255,255,255,0.8)]'}`}
                 onMouseEnter={() => setHoveredChip(i)}
                 onMouseLeave={() => setHoveredChip(null)}
                 style={{
                   opacity: isVisible(i) ? 1 : 0,
                   transform: `${isVisible(i) ? 'scale(1)' : 'scale(0.88)'} ${hoveredChip === i ? 'rotate(-10deg)' : 'rotate(0deg)'}`,
-                  background: hoveredChip === i ? '#DAC0C1' : (chip.highlight ? '#FF9C9C' : '#E8D1D1'),
+                  background: hoveredChip === i ? 'rgba(255,255,255,0.6)' : (chip.highlight ? '#FF9C9C' : 'rgba(255,255,255,0.8)'),
                   transition: 'opacity 100ms ease, transform 200ms ease, background-color 150ms ease',
                   display: 'inline-block',
                 }}
@@ -178,21 +184,19 @@ export default function Home() {
           <div className="flex items-center gap-3 mb-5">
             <div className="w-[3px] h-8 bg-[#EF476F] rounded-sm flex-shrink-0" />
             <div className="flex flex-col gap-0.5">
-              <span className="text-[22px] font-bold text-[#EF476F] leading-none tracking-tight">
+              <span className="text-[22px] font-bold text-[#333333] leading-none tracking-tight">
                 {s.stat}
               </span>
-              <span className="text-[12px] text-gray-400">{s.sub}</span>
             </div>
           </div>
 
-          <Link to="/data" className="group text-[14px] font-medium text-teal no-underline inline-flex items-center gap-1">
+          <Link to="/data" className="group text-[14px] font-medium text-[#003B79] no-underline inline-flex items-center gap-1">
             See the historical data
             <span className="inline-block transition-transform desktop:group-hover:translate-x-1">→</span>
           </Link>
         </div>
 
-
-        <div className="bg-white rounded-[40px] max-w-[1168px] mx-5 tablet:mx-auto flex flex-col desktop:flex-row gap-6 desktop:gap-10 p-5 desktop:px-16 desktop:pt-16 desktop:pb-16 mb-[100px]">
+<div className="bg-white rounded-[40px] max-w-[1168px] mx-5 tablet:mx-auto flex flex-col desktop:flex-row gap-6 desktop:gap-10 p-5 desktop:px-16 desktop:pt-16 desktop:pb-16 mb-[100px]">
           <Link to="/data" className="group no-underline block p-7 rounded-tl-3xl rounded-tr-[32px] rounded-bl-[30px] rounded-br-[32px] flex-1 bg-[#FFE9D2] hover:bg-[#FFEBA9] transition-colors min-h-[360px] flex flex-col relative overflow-hidden">
             <h2 className="text-[28px] font-semibold text-[#EC4612] leading-tight mb-2">Data and trends</h2>
             <p className="text-[20px] font-medium text-[#EC4612] opacity-80 leading-[1.3]">What NO₂ levels look like at the school gate</p>
@@ -200,11 +204,11 @@ export default function Home() {
             <div className="mt-auto relative z-10 rounded-full bg-[#EC4612] group-hover:bg-[#D43F10] transition-colors text-white text-[15px] font-bold text-center py-3.5">See data and trends</div>
           </Link>
 
-          <Link to="/alerts" className="group no-underline block p-7 rounded-tl-3xl rounded-tr-[32px] rounded-bl-[30px] rounded-br-[32px] flex-1 bg-[#8BF0F8]/35 hover:bg-[#CEDEFA] transition-colors min-h-[360px] flex flex-col relative overflow-hidden">
-            <h2 className="text-[28px] font-semibold text-[#1F8A92] leading-tight mb-2">NO₂ alerts</h2>
-            <p className="text-[20px] font-medium text-[#1F8A92] opacity-80 leading-[1.3]">Set an alert for when levels are forecast to be very high at drop off.</p>
+          <Link to="/alerts" className="group no-underline block p-7 rounded-tl-3xl rounded-tr-[32px] rounded-bl-[30px] rounded-br-[32px] flex-1 bg-[#DCC3FF] hover:bg-[#CCB0F5] transition-colors min-h-[360px] flex flex-col relative overflow-hidden">
+            <h2 className="text-[28px] font-semibold text-[#8C3AFF] leading-tight mb-2">NO₂ alerts</h2>
+            <p className="text-[20px] font-medium text-[#8C3AFF] opacity-80 leading-[1.3]">Set an alert for when levels are forecast to be very high at drop off.</p>
             <img src={illoAlerts} alt="" className="absolute bottom-[calc(28px+24px)] -right-[10px] w-4/5 object-contain object-bottom" />
-            <div className="mt-auto relative z-10 rounded-full bg-[#1F8A92] group-hover:bg-[#1C7C83] transition-colors text-white text-[15px] font-bold text-center py-3.5">Get an early alert</div>
+            <div className="mt-auto relative z-10 rounded-full bg-[#8C3AFF] group-hover:bg-[#7B2EE0] transition-colors text-white text-[15px] font-bold text-center py-3.5">Get an early alert</div>
           </Link>
 
           <Link to="/no2" className="group no-underline block p-7 rounded-tl-3xl rounded-tr-[32px] rounded-bl-[30px] rounded-br-[32px] flex-1 bg-[#FDD0CF] hover:bg-[#FBB6AC] transition-colors min-h-[360px] flex flex-col relative overflow-hidden">
@@ -214,6 +218,8 @@ export default function Home() {
             <div className="mt-auto relative z-10 rounded-full bg-[#EA3457] group-hover:bg-[#D32F4E] transition-colors text-white text-[15px] font-bold text-center py-3.5">Find out more</div>
           </Link>
         </div>
+
+        <img src="/clouds2.svg" alt="" style={{width:'100%', display:'block', paddingTop:'100px'}} />
 
       </div>
     </Layout>

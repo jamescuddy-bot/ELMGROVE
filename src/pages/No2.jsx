@@ -23,6 +23,12 @@ export default function No2() {
   const [chipIndex, setChipIndex] = useState(-1)
 
   useEffect(() => {
+    const prev = document.body.style.background
+    document.body.style.background = '#FDD0CF'
+    return () => { document.body.style.background = prev }
+  }, [])
+
+  useEffect(() => {
     if (chipIndex < HEADER_CHIPS.length - 1) {
       const t = setTimeout(() => setChipIndex(i => i + 1), 60)
       return () => clearTimeout(t)

@@ -18,6 +18,12 @@ export default function Alerts() {
   const [chipIndex, setChipIndex] = useState(-1)
 
   useEffect(() => {
+    const prev = document.body.style.background
+    document.body.style.background = '#DCC3FF'
+    return () => { document.body.style.background = prev }
+  }, [])
+
+  useEffect(() => {
     if (chipIndex < HEADER_CHIPS.length - 1) {
       const t = setTimeout(() => setChipIndex(i => i + 1), 60)
       return () => clearTimeout(t)
@@ -78,8 +84,8 @@ export default function Alerts() {
 
   if (submitted) {
     return (
-      <Layout bgColor="#D6FAFD">
-        <div className="flex flex-col flex-1 bg-[#D6FAFD]">
+      <Layout bgColor="#DCC3FF">
+        <div className="flex flex-col flex-1 bg-[#DCC3FF]">
         <div className="px-5 pt-10 pb-8 flex flex-col gap-6">
           <div className="w-14 h-14 rounded-full bg-[#F0FDF8] flex items-center justify-center">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -114,19 +120,19 @@ export default function Alerts() {
   }
 
   return (
-    <Layout bgColor="#D6FAFD">
-      <div className="flex flex-col flex-1 bg-[#D6FAFD]">
+    <Layout bgColor="#DCC3FF">
+      <div className="flex flex-col flex-1 bg-[#DCC3FF]">
         <div className="w-full max-w-[1168px] mx-auto px-5 desktop:px-20 pt-10 pb-8 desktop:pt-20 desktop:pb-20 flex flex-col gap-4 desktop:gap-8">
           <div className="flex flex-wrap gap-2">
             {HEADER_CHIPS.map((word, i) => (
-              <span key={word} className="inline-block bg-[#1F8A92] rounded-[7px] py-[3px] px-[9px] text-[26px] desktop:text-[52px] font-semibold text-white leading-[1.25]" style={{opacity: i <= chipIndex ? 1 : 0, transform: i <= chipIndex ? 'scale(1)' : 'scale(0.88)', transition: 'opacity 100ms ease, transform 100ms ease'}}>
+              <span key={word} className="inline-block bg-[#8C3AFF] rounded-[7px] py-[3px] px-[9px] text-[26px] desktop:text-[52px] font-semibold text-white leading-[1.25]" style={{opacity: i <= chipIndex ? 1 : 0, transform: i <= chipIndex ? 'scale(1)' : 'scale(0.88)', transition: 'opacity 100ms ease, transform 100ms ease'}}>
                 {word === 'NO₂' ? <>NO<span style={{fontSize:'0.6em',position:'relative',top:'0.1em'}}>2</span></> : word}
               </span>
             ))}
           </div>
           <div className="flex flex-col gap-2">
             <span className="self-start bg-[#FFE599] text-[#B45309] text-[13px] font-semibold px-3 py-1 rounded-full">Coming soon</span>
-            <p className="text-[20px] desktop:text-[28px] font-semibold text-[#1F8A92] leading-[1.2] m-0">
+            <p className="text-[20px] desktop:text-[28px] font-semibold text-[#8C3AFF] leading-[1.2] m-0">
               Get a free text message when NO₂ levels at Elm Grove are forecast to be high. Alerts are sent before drop-off so you have time to act.
             </p>
           </div>
