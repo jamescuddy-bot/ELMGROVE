@@ -61,7 +61,7 @@ function buildStatements(data) {
       label: label || period,
       segments: [
         { text: `${period} NO₂ levels were`, highlight: false },
-        { text: 'within safe limits.', highlight: true },
+        { text: 'within safe limits.', highlight: true, tone: 'positive' },
       ],
       stat: `${avg} μg/m³`,
       sub: `WHO safe limit: ${WHO_LIMIT} μg/m³`,
@@ -97,7 +97,7 @@ function getChips(segments) {
   const chips = []
   for (const seg of segments) {
     if (seg.highlight) {
-      chips.push({ text: seg.text, highlight: true })
+      chips.push({ text: seg.text, highlight: true, tone: seg.tone })
     } else {
       for (const word of seg.text.split(' ').filter(Boolean)) {
         chips.push({ text: word, highlight: false })
@@ -195,23 +195,26 @@ export default function Home() {
           </span>
 
           <Link to="/data" className="word-chip-wrap flex flex-wrap gap-[5px] mb-8 no-underline">
-            {chips.map((chip, i) => (
+            {chips.map((chip, i) => {
+              const highlightBg = chip.tone === 'positive' ? '#A8E6A8' : '#FF9C9C'
+              return (
               <span
                 key={`${stmtIndex}-${i}`}
-                className={`word-chip text-ink desktop:cursor-pointer ${chip.highlight ? 'bg-[#FF9C9C]' : 'bg-[rgba(255,255,255,0.8)]'}`}
+                className={`word-chip text-ink desktop:cursor-pointer ${chip.highlight ? '' : 'bg-[rgba(255,255,255,0.8)]'}`}
                 onMouseEnter={() => setHoveredChip(i)}
                 onMouseLeave={() => setHoveredChip(null)}
                 style={{
                   opacity: isVisible(i) ? 1 : 0,
                   transform: `${isVisible(i) ? 'scale(1)' : 'scale(0.88)'} ${hoveredChip === i ? 'rotate(-10deg)' : 'rotate(0deg)'}`,
-                  background: hoveredChip === i ? 'rgba(255,255,255,0.6)' : (chip.highlight ? '#FF9C9C' : 'rgba(255,255,255,0.8)'),
+                  background: hoveredChip === i ? 'rgba(255,255,255,0.6)' : (chip.highlight ? highlightBg : 'rgba(255,255,255,0.8)'),
                   transition: 'opacity 100ms ease, transform 200ms ease, background-color 150ms ease',
                   display: 'inline-block',
                 }}
               >
                 {chip.text === 'NO₂' ? <>NO<span style={{fontSize:'0.6em',position:'relative',top:'0.1em'}}>2</span></> : chip.text}
               </span>
-            ))}
+              )
+            })}
           </Link>
 
           <div className="flex items-center gap-3 mb-5">
