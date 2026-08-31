@@ -11,7 +11,7 @@ const HOLD_DURATION = 2500
 const WHO_LIMIT = 25
 
 function buildStatements(data) {
-  const { label, dropoffAvg, pickupAvg, daysExceeded, totalDays, dropoffPctOver, pickupPctOver } = data
+  const { label = '', dropoffAvg, pickupAvg, daysExceeded, totalDays, dropoffPctOver, pickupPctOver } = data
   const isMonth = !label.includes('–')
   const period = isMonth ? 'Last month' : 'Last week'
   const statements = []
@@ -55,17 +55,42 @@ function buildStatements(data) {
     })
   }
 
+  if (statements.length === 0 && (typeof dropoffAvg === 'number' || typeof pickupAvg === 'number')) {
+    const avg = typeof dropoffAvg === 'number' ? dropoffAvg : pickupAvg
+    statements.push({
+      label: label || period,
+      segments: [
+        { text: `${period} NO₂ levels were`, highlight: false },
+        { text: 'within safe limits.', highlight: true },
+      ],
+      stat: `${avg} μg/m³`,
+      sub: `WHO safe limit: ${WHO_LIMIT} μg/m³`,
+    })
+  }
+
+  if (statements.length === 0) {
+    statements.push({
+      label: 'NO₂ levels',
+      segments: [
+        { text: 'No NO₂ readings are available for the last week or month —', highlight: false },
+        { text: 'check back soon.', highlight: true },
+      ],
+      stat: '—',
+      sub: `WHO safe limit: ${WHO_LIMIT} μg/m³`,
+    })
+  }
+
   return statements
 }
 
 const FALLBACK_STATEMENTS = buildStatements({
-  label: 'Mon 2 – Fri 6 Mar',
-  dropoffAvg: 34,
-  pickupAvg: 31,
-  daysExceeded: 4,
-  totalDays: 5,
-  dropoffPctOver: 36,
-  pickupPctOver: 24,
+  label: 'February 2026',
+  dropoffAvg: 40,
+  pickupAvg: 28.2,
+  daysExceeded: 12,
+  totalDays: 13,
+  dropoffPctOver: 60,
+  pickupPctOver: 13,
 })
 
 function getChips(segments) {
@@ -99,10 +124,18 @@ export default function Home() {
     fetch('/.netlify/functions/latest-stats')
       .then(r => r.json())
       .then(data => {
-        if (data.dropoffAvg !== null || data.pickupAvg !== null) {
-          const built = buildStatements(data)
-          if (built.length > 0) setStatements(built)
-        }
+        const built = data.error
+          ? buildStatements({
+              label: '',
+              dropoffAvg: null,
+              pickupAvg: null,
+              daysExceeded: 0,
+              totalDays: 0,
+              dropoffPctOver: 0,
+              pickupPctOver: 0,
+            })
+          : buildStatements(data)
+        if (built.length > 0) setStatements(built)
       })
       .catch(() => {})
   }, [])
